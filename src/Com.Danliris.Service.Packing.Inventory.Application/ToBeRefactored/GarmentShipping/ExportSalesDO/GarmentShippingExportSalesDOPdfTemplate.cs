@@ -60,11 +60,11 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             
 
             //cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("PT. AMBASSADOR GARMINDO", header_font_bold_big));
+            cellHeaderContent1.AddElement(new Phrase("PT. EFRATA GARMINDO UTAMA", header_font_bold_big));
             cellHeaderContent1.AddElement(new Phrase("Head Office : Banaran, Grogol, Sukoharjo, 57552", small_font));
             //cellHeaderContent1.AddElement(new Phrase("", small_font));
             cellHeaderContent1.AddElement(new Phrase("Central Java, Indonesia", small_font));
-            cellHeaderContent1.AddElement(new Phrase("Phone : (0271) 732888, 7652913", small_font));
+            cellHeaderContent1.AddElement(new Phrase("Phone : (0271) 714400, 719911", small_font));
             //cellHeaderContent1.AddElement(new Phrase("Fax : (+62 271) 740777, 735222", small_font));
             //cellHeaderContent1.AddElement(new Phrase("PO BOX 166 Solo, 57100", small_font));
             //cellHeaderContent1.AddElement(new Phrase("", small_font));
@@ -82,7 +82,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellHeaderContent2.AddElement(new Phrase("Bag. Gudang " + viewModel.unit.Name, small_font));
             cellHeaderContent2.AddElement(new Phrase("Export/Banaran ", small_font));
             cellHeaderContent2.AddElement(new Phrase("\n", normal_font));
-            cellHeaderContent2.AddElement(new Phrase("D.O. Penjualan Export", header_font_bold_underlined));
+            cellHeaderContent2.AddElement(new Phrase("D.O. Penjualan", header_font_bold_underlined));
             cellHeaderContent2.AddElement(new Phrase("\n", normal_font));
             cellHeaderContent2.AddElement(new Phrase("Untuk melengkapi nota No. ", small_font));
             cellHeaderContent2.AddElement(new Phrase("Harap dikeluarkan barang-barang tersebut dibawah ini.", small_font));

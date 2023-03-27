@@ -121,7 +121,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
         {
             var year = DateTime.Now.ToString("yy");
 
-            var prefix = $"AG/DOPL/{year}";
+            var prefix = $"EFRATA/DOPL/{year}";
 
             var lastNo = _repository.ReadAll().Where(w => w.LocalSalesDONo.StartsWith(prefix))
                 .OrderByDescending(o => o.LocalSalesDONo)
