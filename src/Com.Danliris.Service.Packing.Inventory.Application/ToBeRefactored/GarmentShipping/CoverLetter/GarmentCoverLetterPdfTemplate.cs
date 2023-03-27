@@ -283,7 +283,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellSign.Phrase = new Phrase("Sat Pam", normal_font);
             tableSign.AddCell(cellSign);
 
-            cellSign.Phrase = new Phrase("AG2", normal_font);
+            cellSign.Phrase = new Phrase("EFRATA GARMINDO UTAMA", normal_font);
             tableSign.AddCell(cellSign);
 
             cellSign.Phrase = new Phrase("Shipping Staff", normal_font);
@@ -390,7 +390,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 cb.BeginText();
 
                 BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
-
+                BaseFont bf_header = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
                 float height = writer.PageSize.Height, width = writer.PageSize.Width;
                 float marginLeft = document.LeftMargin - 10, marginTop = document.TopMargin, marginRight = document.RightMargin - 10;
 
@@ -401,10 +401,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 var branchOfficeY = height - marginTop + 70;
 
-                byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
-                Image imageDL = Image.GetInstance(imageByteDL);
-                imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
-                cb.AddImage(imageDL, inlineImage: true);
+                //byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
+                //Image imageDL = Image.GetInstance(imageByteDL);
+                //imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
+                //cb.AddImage(imageDL, inlineImage: true);
                 //for (int i = 0; i < branchOffices.Length; i++)
                 //{
                 //    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices[i], marginLeft, branchOfficeY - 10 - (i * 8), 0);
@@ -417,26 +417,29 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 var headOfficeX = width / 2 - 200;
                 var headOfficeY = height - marginTop + 110;
 
-                byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
-                Image image = Image.GetInstance(imageByte);
-                if (image.Width > 160)
-                {
-                    float percentage = 0.0f;
-                    percentage = 160 / image.Width;
-                    image.ScalePercent(percentage * 100);
-                }
-                image.SetAbsolutePosition(headOfficeX, headOfficeY);
-                cb.AddImage(image, inlineImage: true);
+                //byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
+                //Image image = Image.GetInstance(imageByte);
+                //if (image.Width > 160)
+                //{
+                //    float percentage = 0.0f;
+                //    percentage = 160 / image.Width;
+                //    image.ScalePercent(percentage * 100);
+                //}
+                //image.SetAbsolutePosition(headOfficeX, headOfficeY);
+                //cb.AddImage(image, inlineImage: true);
+
+                cb.SetFontAndSize(bf_header, 12);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft, headOfficeY, 0);
 
                 string[] headOffices = {
-                "PT. AMBASSADOR GARMINDO",
-                "Head Office : Banaran, Grogol, Sukoharjo, Jawa Tengah ",
-                "57552",
-                "TELP.: (0271) 732888, 7652913",
-            };
+                    "Head Office : Banaran, Grogol, Sukoharjo, Jawa Tengah ",
+                    "57552",
+                    "Telp. (0271) 714400, 719911",
+                };
                 for (int i = 0; i < headOffices.Length; i++)
                 {
-                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], headOfficeX, headOfficeY - image.ScaledHeight - (i * 10), 0);
+                    cb.SetFontAndSize(bf, 6);
+                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], marginLeft, headOfficeY - 10 - (i * 10), 0);
                 }
 
                 #endregion

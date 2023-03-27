@@ -287,7 +287,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 //cb.AddImage(image, inlineImage: true);
 
                 string[] headOffices = {
-                "PT. AMBASSADOR GARMINDO",
+                "PT. EFARTA RETAILINDO",
                 "Banaran, Grogol, Sukoharjo, Jawa Tengah",
                 "57552",
                 "Telp (0271) 732888, 7652913",

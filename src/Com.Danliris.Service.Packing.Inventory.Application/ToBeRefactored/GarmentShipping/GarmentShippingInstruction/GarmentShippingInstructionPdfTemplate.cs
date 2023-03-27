@@ -369,8 +369,8 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             var branchOfficeY = height - marginTop + 50;
             cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, " HEAD OFFICE :", marginLeft, branchOfficeY, 0);
             string[] branchOffices = {
-                " Cable   : AMBASSADOR GARMINDO",
-                " Phone   : (0271) 732888, 7652913",
+                " Cable   : EFRATA GARMINDO UTAMA",
+                " Phone   : (0271) 714400, 719911",
                 //" Website : ",
                 //" Fax. : (0271) 732888, 7652913",
             };
@@ -389,7 +389,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             string[] headOffices = {
                 //"                                                                                                                                                                      Ref. No. : FM-00-SP-24-004",
-                "PT. AMBASSADOR GARMINDO",
+                "PT. EFRATA GARMINDO UTAMA",
                 //"SPINNING - WEAVING - FINISHING - PRINTING - GARMENT",
                 "Banaran, Grogol, Sukoharjo, Jawa Tengah",
                 "57552",
