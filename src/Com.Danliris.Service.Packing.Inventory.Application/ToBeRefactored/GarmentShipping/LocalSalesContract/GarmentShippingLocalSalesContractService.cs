@@ -125,7 +125,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             var year = DateTime.Now.ToString("yy");
             var month = DateTime.Now.ToString("MM");
 
-            var prefix = $"AG/GMT/{(vm.transactionType.code ?? "").Trim().ToUpper()}/{month}/{year}";
+            var prefix = $"EFRATA/GMT/{(vm.transactionType.code ?? "").Trim().ToUpper()}/{month}/{year}";
 
             var lastInvoiceNo = _repository.ReadAll().Where(w => w.SalesContractNo.StartsWith(prefix))
                 .OrderByDescending(o => o.SalesContractNo)
