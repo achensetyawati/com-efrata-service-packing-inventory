@@ -228,7 +228,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             PdfPCell cellBodySignNoBorder2 = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
 
             cellBodySignNoBorder.AddElement(new Phrase("Pihak Pertama (I)", normal_font));
-            cellBodySignNoBorder.AddElement(new Phrase("PT DANLIRIS", normal_font));
+            cellBodySignNoBorder.AddElement(new Phrase("PT EFRATA GARMINDO UTAMA", normal_font));
             cellBodySignNoBorder.AddElement(new Phrase("\n\n\n\n", normal_font));
             cellBodySignNoBorder.AddElement(new Phrase(viewModel.sellerName, normal_font_underlined));
             cellBodySignNoBorder.AddElement(new Phrase(viewModel.sellerPosition, normal_font));

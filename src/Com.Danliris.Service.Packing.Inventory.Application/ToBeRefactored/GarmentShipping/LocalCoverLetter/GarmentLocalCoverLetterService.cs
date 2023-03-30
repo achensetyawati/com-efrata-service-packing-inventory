@@ -78,7 +78,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
         {
             var year = DateTime.Now.ToString("yy");
 
-            var prefix = $"{year} / SPAG /";
+            var prefix = $"{year} / SPEF /";
 
             var lastInvoiceNo = _repository.ReadAll().Where(w => w.LocalCoverLetterNo.StartsWith(prefix))
                 .OrderByDescending(o => o.LocalCoverLetterNo)
