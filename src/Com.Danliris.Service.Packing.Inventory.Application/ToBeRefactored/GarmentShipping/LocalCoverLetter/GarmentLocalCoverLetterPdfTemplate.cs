@@ -259,10 +259,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 var branchOfficeY = height - marginTop + 70;
 
-                byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
-                Image imageDL = Image.GetInstance(imageByteDL);
-                imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
-                cb.AddImage(imageDL, inlineImage: true);
+                //byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
+                //Image imageDL = Image.GetInstance(imageByteDL);
+                //imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
+                //cb.AddImage(imageDL, inlineImage: true);
                 //for (int i = 0; i < branchOffices.Length; i++)
                 //{
                 //    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices[i], marginLeft, branchOfficeY - 10 - (i * 8), 0);
@@ -295,7 +295,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 for (int i = 0; i < headOffices.Length; i++)
                 {
-                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], headOfficeX, headOfficeY - 0 - (i * 10), 0);
+                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], marginLeft, headOfficeY - 0 - (i * 10), 0);
                 }
 
                 #endregion
