@@ -69,7 +69,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
 			if (SailingDate == default(DateTimeOffset))
 			{
-				yield return new ValidationResult("SailingDate harus diisi", new List<string> { "SailingDate" });
+				yield return new ValidationResult("Tanggal Pengiriman harus diisi", new List<string> { "SailingDate" });
 			}
 			 
 
