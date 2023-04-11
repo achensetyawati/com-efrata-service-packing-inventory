@@ -117,10 +117,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             //    yield return new ValidationResult("Container No tidak boleh kosong", new List<string> { "containerNo" });
             //}
 
-            if (string.IsNullOrEmpty(freight))
-            {
-                yield return new ValidationResult("Freight tidak boleh kosong", new List<string> { "freight" });
-            }
+            //if (string.IsNullOrEmpty(freight))
+            //{
+            //    yield return new ValidationResult("Freight tidak boleh kosong", new List<string> { "freight" });
+            //}
 
             if (exportEstimationDate == null || exportEstimationDate == DateTimeOffset.MinValue)
             {
