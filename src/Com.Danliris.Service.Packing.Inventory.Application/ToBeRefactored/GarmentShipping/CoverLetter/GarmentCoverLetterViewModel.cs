@@ -92,10 +92,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 yield return new ValidationResult("Order tidak boleh kosong", new List<string> { "order" });
             }
 
-            if (forwarder == null || forwarder.id == 0)
-            {
-                yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
-            }
+            //if (forwarder == null || forwarder.id == 0)
+            //{
+            //    yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
+            //}
 
             if (string.IsNullOrEmpty(truck))
             {
@@ -124,7 +124,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             if (exportEstimationDate == null || exportEstimationDate == DateTimeOffset.MinValue)
             {
-                yield return new ValidationResult("Tgl Perkiraan Export tidak boleh kosong", new List<string> { "exportEstimationDate" });
+                yield return new ValidationResult("Tgl Perkiraan Pengiriman tidak boleh kosong", new List<string> { "exportEstimationDate" });
             }
 
             if (string.IsNullOrEmpty(unit))
