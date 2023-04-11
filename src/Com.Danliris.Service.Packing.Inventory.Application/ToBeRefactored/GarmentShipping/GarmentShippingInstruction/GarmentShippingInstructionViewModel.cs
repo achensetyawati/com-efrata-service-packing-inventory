@@ -124,10 +124,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 yield return new ValidationResult("Notify tidak boleh kosong", new List<string> { "Notify" });
             }
 
-            if (forwarder == null || forwarder.id == 0)
-            {
-                yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
-            }
+            //if (forwarder == null || forwarder.id == 0)
+            //{
+            //    yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
+            //}
         }
     }
 }

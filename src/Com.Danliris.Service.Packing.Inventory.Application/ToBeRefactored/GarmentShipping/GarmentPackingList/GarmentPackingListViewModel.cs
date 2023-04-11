@@ -167,7 +167,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             if (ExportEstimationDate == null || ExportEstimationDate == DateTimeOffset.MinValue)
             {
-                yield return new ValidationResult("Tanggal Perkiraan Export tidak boleh kosong", new List<string> { "ExportEstimationDate" });
+                yield return new ValidationResult("Tanggal Perkiraan Pengiriman tidak boleh kosong", new List<string> { "ExportEstimationDate" });
             }
 
             if (Items == null || Items.Count < 1)
@@ -249,12 +249,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                                     errorDetail["Sizes"] = errorSizes;
                                     errorDetailsCount++;
                                 }
-                                //
-                                // if (detail.Sizes.Sum(s => s.Quantity) != (detail.CartonQuantity * detail.QuantityPCS))
-                                // {
-                                //     errorDetail["TotalQtySize"] = "Harus sama dengan Total Qty";
-                                //     errorDetailsCount++;
-                                // }
+
+                                if (detail.Sizes.Sum(s => s.Quantity) != (detail.CartonQuantity * detail.QuantityPCS))
+                                {
+                                    errorDetail["TotalQtySize"] = "Harus sama dengan Total Qty";
+                                    errorDetailsCount++;
+                                }
                             }
 
                             errorDetails.Add(errorDetail);
@@ -266,11 +266,11 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                             errorItemsCount++;
                         }
 
-                        //if (item.Quantity != item.Details.Sum(d => d.CartonQuantity * d.QuantityPCS))
-                        //{
-                        //    errorItem["totalQty"] = "Harus sama dengan Qty";
-                        //    errorItemsCount++;
-                        //}
+                        if (item.Quantity != item.Details.Sum(d => d.CartonQuantity * d.QuantityPCS))
+                        {
+                            errorItem["totalQty"] = "Harus sama dengan Qty";
+                            errorItemsCount++;
+                        }
                     }
 
                     errorItems.Add(errorItem);
