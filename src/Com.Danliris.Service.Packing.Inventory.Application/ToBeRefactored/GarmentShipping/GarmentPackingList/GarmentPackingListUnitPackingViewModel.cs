@@ -58,6 +58,78 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                             errorItem["Section"] = "Section harus sama semua";
                             errorItemsCount++;
                         }
+
+                        if (item.Quantity != item.Details.Sum(d => d.CartonQuantity * d.QuantityPCS))
+                        {
+                            errorItem["totalQty"] = "Harus sama dengan Qty";
+                            errorItemsCount++;
+                        }
+
+                        if (item.Details == null || item.Details.Count < 1)
+                        {
+                            errorItem["DetailsCount"] = "Details tidak boleh kosong";
+                            errorItemsCount++;
+                        }
+                        else
+                        {
+                            int errorDetailsCount = 0;
+                            List<Dictionary<string, object>> errorDetails = new List<Dictionary<string, object>>();
+
+                            foreach (var detail in item.Details)
+                            {
+                                Dictionary<string, object> errorDetail = new Dictionary<string, object>();
+
+                                if (string.IsNullOrWhiteSpace(detail.Colour))
+                                {
+                                    errorDetail["Colour"] = "Colour tidak boleh kosong";
+                                    errorDetailsCount++;
+                                }
+
+                                if (detail.Sizes == null || detail.Sizes.Count < 1)
+                                {
+                                    errorDetail["SizesCount"] = "Sizes tidak boleh kosong";
+                                    errorDetailsCount++;
+                                }
+                                else
+                                {
+                                    int errorSizesCount = 0;
+                                    List<Dictionary<string, object>> errorSizes = new List<Dictionary<string, object>>();
+
+                                    foreach (var size in detail.Sizes)
+                                    {
+                                        Dictionary<string, object> errorSize = new Dictionary<string, object>();
+
+                                        if (size.Size == null || size.Size.Id == 0)
+                                        {
+                                            errorSize["Size"] = "Size tidak boleh kosong";
+                                            errorSizesCount++;
+                                        }
+
+                                        errorSizes.Add(errorSize);
+                                    }
+
+                                    if (errorSizesCount > 0)
+                                    {
+                                        errorDetail["Sizes"] = errorSizes;
+                                        errorDetailsCount++;
+                                    }
+
+                                    if (detail.Sizes.Sum(s => s.Quantity) != (detail.CartonQuantity * detail.QuantityPCS))
+                                    {
+                                        errorDetail["TotalQtySize"] = "Harus sama dengan Total Qty";
+                                        errorDetailsCount++;
+                                    }
+                                }
+
+                                errorDetails.Add(errorDetail);
+                            }
+
+                            if (errorDetailsCount > 0)
+                            {
+                                errorItem["Details"] = errorDetails;
+                                errorItemsCount++;
+                            }
+                        }
                     }
 
                     if (Status == GarmentPackingListStatusEnum.DRAFT_APPROVED_SHIPPING.ToString())
@@ -117,11 +189,11 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                                         errorDetailsCount++;
                                     }
 
-                                    //if (detail.Sizes.Sum(s => s.Quantity) != (detail.CartonQuantity * detail.QuantityPCS))
-                                    //{
-                                    //    errorDetail["TotalQtySize"] = "Harus sama dengan Total Qty";
-                                    //    errorDetailsCount++;
-                                    //}
+                                    if (detail.Sizes.Sum(s => s.Quantity) != (detail.CartonQuantity * detail.QuantityPCS))
+                                    {
+                                        errorDetail["TotalQtySize"] = "Harus sama dengan Total Qty";
+                                        errorDetailsCount++;
+                                    }
                                 }
 
                                 errorDetails.Add(errorDetail);
@@ -133,11 +205,11 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                                 errorItemsCount++;
                             }
 
-                            //if (item.Quantity != item.Details.Sum(d => d.CartonQuantity * d.QuantityPCS))
-                            //{
-                            //    errorItem["totalQty"] = "Harus sama dengan Qty";
-                            //    errorItemsCount++;
-                            //}
+                            if (item.Quantity != item.Details.Sum(d => d.CartonQuantity * d.QuantityPCS))
+                            {
+                                errorItem["totalQty"] = "Harus sama dengan Qty";
+                                errorItemsCount++;
+                            }
                         }
                     }
 
