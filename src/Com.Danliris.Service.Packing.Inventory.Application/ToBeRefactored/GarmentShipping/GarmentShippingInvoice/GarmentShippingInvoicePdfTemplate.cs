@@ -115,14 +115,14 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             
             bodyTable.AddCell(bodyTableHeader);
 
-            bodyTableHeader.Phrase = new Phrase("UNIT PRICE\n" + viewModel.CPrice + " IN USD", normal_font);
+            bodyTableHeader.Phrase = new Phrase("UNIT PRICE\n" + viewModel.CPrice + " IN "+ viewModel.Items.FirstOrDefault().CurrencyCode, normal_font);
             //bodyTableHeader.HorizontalAlignment = Element.ALIGN_CENTER;
             //bodyTableHeader.VerticalAlignment = Element.ALIGN_CENTER;
             //bodyTableHeader.Rowspan = 1;
             bodyTableHeader.Colspan = 1;
             bodyTable.AddCell(bodyTableHeader);
 
-            bodyTableHeader.Phrase = new Phrase("TOTAL PRICE\n" + viewModel.CPrice + " IN USD", normal_font);
+            bodyTableHeader.Phrase = new Phrase("TOTAL PRICE\n" + viewModel.CPrice + " IN "+ viewModel.Items.FirstOrDefault().CurrencyCode, normal_font);
             //bodyTableHeader.HorizontalAlignment = Element.ALIGN_CENTER;
             //bodyTableHeader.VerticalAlignment = Element.ALIGN_CENTER;
             bodyTableHeader.Colspan = 1;
@@ -448,7 +448,6 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             document.Add(bodyTable);
             #endregion
 
-
             //
             #region calculationTable
             if (viewModel.GarmentShippingInvoiceAdjustments.Count > 0)
@@ -464,7 +463,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 calculationCellLeft.Phrase = new Phrase("TOTAL AMOUNT FOB ", normal_font);
                 calculationTable.AddCell(calculationCellLeft);
-                calculationCellLeft.Phrase = new Phrase(": USD ", normal_font);
+                calculationCellLeft.Phrase = new Phrase($": {viewModel.Items.FirstOrDefault().CurrencyCode} ", normal_font);
                 calculationTable.AddCell(calculationCellLeft);
                 calculationCellRight.Phrase = new Phrase(string.Format("{0:n2}", totalAmount), normal_font);
                 calculationTable.AddCell(calculationCellRight);
@@ -478,7 +477,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                     totalPaid += adj.AdjustmentValue;
                     calculationCellLeft.Phrase = new Phrase($"{adj.AdjustmentDescription} ", normal_font);
                     calculationTable.AddCell(calculationCellLeft);
-                    calculationCellLeft.Phrase = new Phrase(": USD ", normal_font);
+                    calculationCellLeft.Phrase = new Phrase($": {viewModel.Items.FirstOrDefault().CurrencyCode} ", normal_font);
                     calculationTable.AddCell(calculationCellLeft);
                     calculationCellRight.Phrase = new Phrase(string.Format("{0:n2}", adj.AdjustmentValue), normal_font);
                     calculationTable.AddCell(calculationCellRight);
@@ -489,7 +488,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 calculationCellLeft.Phrase = new Phrase($"TOTAL AMOUNT TO BE PAID ", bold_font);
                 calculationCellLeft.Border = Rectangle.TOP_BORDER;
                 calculationTable.AddCell(calculationCellLeft);
-                calculationCellLeft.Phrase = new Phrase(": USD ", bold_font);
+                calculationCellLeft.Phrase = new Phrase($": {viewModel.Items.FirstOrDefault().CurrencyCode} ", bold_font);
                 calculationTable.AddCell(calculationCellLeft);
                 calculationCellRight.Phrase = new Phrase(string.Format("{0:n2}", totalPaid), bold_font);
                 calculationCellRight.Border = Rectangle.TOP_BORDER;
@@ -508,7 +507,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 {
                     amountToText = CurrencyToText.ToWords(totalPaid);
                 }
-                calculationCellLeft.Phrase = new Phrase($"SAY : US DOLLARS {amountToText.ToUpper()} ONLY ///", normal_font);
+                calculationCellLeft.Phrase = new Phrase($"SAY : {viewModel.Items.FirstOrDefault().CurrencyCode} "+ amountToText.ToUpper() + " ONLY ///", normal_font);
                 calculationCellLeft.Colspan = 4;
                 calculationCellLeft.Border = Rectangle.NO_BORDER;
                 calculationTable.AddCell(calculationCellLeft);
@@ -518,7 +517,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             else
             {
                 string amountToText = CurrencyToText.ToWords(totalAmount);
-                document.Add(new Paragraph("SAY   : US DOLLARS " + amountToText.ToUpper() + " ONLY ///", normal_font));
+                document.Add(new Paragraph($"SAY   : {viewModel.Items.FirstOrDefault().CurrencyCode} " + amountToText.ToUpper() + " ONLY ///", normal_font));
                 document.Add(new Paragraph("\n", normal_font));
             }
             #endregion
@@ -536,7 +535,6 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 document.Add(new Paragraph("PURPOSE CODE : 1011", normal_font));
                 document.Add(new Paragraph("\n", normal_font));
             }
-
 
             #region MARK
             PdfPTable tableMark = new PdfPTable(2);
@@ -897,7 +895,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             tabledetailOrders2.AddCell(cellDetailContentLeft);
 
 
-            cellDetailContentLeft.Phrase = new Phrase("SAILING ON OR ABOUT", normal_font);
+            cellDetailContentLeft.Phrase = new Phrase("DELIVERY ON OR ABOUT", normal_font);
             cellDetailContentLeft.Colspan = 1;
             cellDetailContentLeft.Border = Rectangle.LEFT_BORDER;
             tabledetailOrders2.AddCell(cellDetailContentLeft);
