@@ -54,7 +54,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             if (emkl == null || emkl.Id == 0)
             {
-                yield return new ValidationResult("EMKL tidak boleh kosong", new List<string> { "emkl" });
+                yield return new ValidationResult("Trucking tidak boleh kosong", new List<string> { "emkl" });
             }
 
             if (string.IsNullOrEmpty(destination))
