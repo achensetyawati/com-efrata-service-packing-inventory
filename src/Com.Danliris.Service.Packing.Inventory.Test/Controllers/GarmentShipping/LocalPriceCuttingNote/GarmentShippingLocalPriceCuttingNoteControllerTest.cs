@@ -1,4 +1,5 @@
 ﻿using Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.GarmentShipping.ShippingLocalPriceCuttingNote;
+using Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.GarmentShipping.ShippingLocalSalesNote;
 using Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Utilities;
 using Com.Danliris.Service.Packing.Inventory.Infrastructure.IdentityProvider;
 using Com.Danliris.Service.Packing.Inventory.WebApi.Controllers.GarmentShipping.DebitNote;
@@ -14,7 +15,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
 {
     public class GarmentShippingLocalPriceCuttingNoteControllerTest
     {
-        protected GarmentShippingLocalPriceCuttingNoteController GetController(IGarmentShippingLocalPriceCuttingNoteService service, IIdentityProvider identityProvider, IValidateService validateService)
+        protected GarmentShippingLocalPriceCuttingNoteController GetController(IGarmentShippingLocalPriceCuttingNoteService service, IGarmentShippingLocalSalesNoteService serviceSalesNote, IIdentityProvider identityProvider, IValidateService validateService)
         {
             var claimPrincipal = new Mock<ClaimsPrincipal>();
             var claims = new Claim[]
@@ -23,7 +24,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
             };
             claimPrincipal.Setup(claim => claim.Claims).Returns(claims);
 
-            var controller = new GarmentShippingLocalPriceCuttingNoteController(service, identityProvider, validateService)
+            var controller = new GarmentShippingLocalPriceCuttingNoteController(service, serviceSalesNote, identityProvider, validateService)
             {
                 ControllerContext = new ControllerContext()
                 {
