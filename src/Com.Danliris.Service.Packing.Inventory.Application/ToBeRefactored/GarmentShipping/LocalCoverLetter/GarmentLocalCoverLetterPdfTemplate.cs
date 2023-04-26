@@ -123,17 +123,17 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             tableMark.SetWidths(new float[] { 1f, 6f });
             PdfPCell cellMark = new PdfPCell() { MinimumHeight = 15, Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
 
-            cellMark.Phrase = new Phrase("No Bea Cukai :", normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase("No Bea Cukai :", normal_font);
+            //tableMark.AddCell(cellMark);
 
-            cellMark.Phrase = new Phrase(viewModel.bcNo, normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase(viewModel.bcNo, normal_font);
+            //tableMark.AddCell(cellMark);
 
-            cellMark.Phrase = new Phrase("Tgl Bea Cukai :", normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase("Tgl Bea Cukai :", normal_font);
+            //tableMark.AddCell(cellMark);
 
-            cellMark.Phrase = new Phrase(viewModel.bcdate.GetValueOrDefault().ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("en-EN")), normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase(viewModel.bcdate.GetValueOrDefault().ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("en-EN")), normal_font);
+            //tableMark.AddCell(cellMark);
 
             cellMark.Phrase = new Phrase("Shippig Mark :", normal_font);
             tableMark.AddCell(cellMark);
