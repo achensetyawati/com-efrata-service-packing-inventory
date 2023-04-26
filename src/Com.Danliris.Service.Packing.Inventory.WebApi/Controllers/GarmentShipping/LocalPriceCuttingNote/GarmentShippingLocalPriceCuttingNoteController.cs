@@ -1,5 +1,6 @@
 ﻿using Com.Danliris.Service.Packing.Inventory.Application.CommonViewModelObjectProperties;
 using Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.GarmentShipping.ShippingLocalPriceCuttingNote;
+using Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.GarmentShipping.ShippingLocalSalesNote;
 using Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Utilities;
 using Com.Danliris.Service.Packing.Inventory.Infrastructure.IdentityProvider;
 using Com.Danliris.Service.Packing.Inventory.WebApi.Helper;
@@ -20,12 +21,14 @@ namespace Com.Danliris.Service.Packing.Inventory.WebApi.Controllers.GarmentShipp
     public class GarmentShippingLocalPriceCuttingNoteController : ControllerBase
     {
         private readonly IGarmentShippingLocalPriceCuttingNoteService _service;
+        private readonly IGarmentShippingLocalSalesNoteService _serviceSalesNote;
         private readonly IIdentityProvider _identityProvider;
         private readonly IValidateService _validateService;
 
-        public GarmentShippingLocalPriceCuttingNoteController(IGarmentShippingLocalPriceCuttingNoteService service, IIdentityProvider identityProvider, IValidateService validateService)
+        public GarmentShippingLocalPriceCuttingNoteController(IGarmentShippingLocalPriceCuttingNoteService service, IGarmentShippingLocalSalesNoteService serviceSalesNote, IIdentityProvider identityProvider, IValidateService validateService)
         {
             _service = service;
+            _serviceSalesNote = serviceSalesNote;
             _identityProvider = identityProvider;
             _validateService = validateService;
         }
@@ -156,8 +159,10 @@ namespace Com.Danliris.Service.Packing.Inventory.WebApi.Controllers.GarmentShipp
                 else
                 {
                     Buyer buyer = _service.GetBuyer(model.buyer.Id);
+                    var salesNote = await _serviceSalesNote.ReadById(model.items.FirstOrDefault().salesNoteId);
+
                     var PdfTemplate = new GarmentShippingLocalPriceCuttingNotePdfTemplate();
-                    MemoryStream stream = PdfTemplate.GeneratePdfTemplate(model, buyer, timeoffsset);
+                    MemoryStream stream = PdfTemplate.GeneratePdfTemplate(model, buyer, salesNote.vat, timeoffsset);
 
                     return new FileStreamResult(stream, "application/pdf")
                     {
