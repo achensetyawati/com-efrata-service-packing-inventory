@@ -12,7 +12,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 {
     public class GarmentShippingLocalPriceCuttingNotePdfTemplate
     {
-        public MemoryStream GeneratePdfTemplate(GarmentShippingLocalPriceCuttingNoteViewModel viewModel, Buyer buyer, int timeoffset)
+        public MemoryStream GeneratePdfTemplate(GarmentShippingLocalPriceCuttingNoteViewModel viewModel, Buyer buyer, Vat vat, int timeoffset)
         {
             const int MARGIN = 20;
 
@@ -116,7 +116,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellBodyRightNoBorder.Border = Rectangle.NO_BORDER;
             tableBody.AddCell(cellBodyRightNoBorder);
 
-            cellBodyRight.Phrase = new Phrase("PPN = 10% X Dasar Pengenaan Pajak...Rp.", normal_font);
+            cellBodyRight.Phrase = new Phrase($"PPN = {vat.rate}% X Dasar Pengenaan Pajak...Rp.", normal_font);
             tableBody.AddCell(cellBodyRight);
 
             cellBodyRightNoBorder.Phrase = new Phrase(string.Format("{0:n2}", ppn), normal_font);

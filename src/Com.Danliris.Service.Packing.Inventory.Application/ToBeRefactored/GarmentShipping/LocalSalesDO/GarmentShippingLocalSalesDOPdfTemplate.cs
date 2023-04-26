@@ -50,12 +50,13 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellHeaderContent1.AddElement(new Phrase(viewModel.localSalesDONo, bold_font));
             tableHeader.AddCell(cellHeaderContent1);
 
-            cellHeaderContent2.AddElement(new Phrase("Surakarta, " + viewModel.date.ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")), normal_font));
+            cellHeaderContent2.AddElement(new Phrase("Sukoharjo, " + viewModel.date.ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")), normal_font));
             cellHeaderContent2.AddElement(new Phrase("\n", normal_font));
             cellHeaderContent2.AddElement(new Phrase("Kepada", normal_font));
             cellHeaderContent2.AddElement(new Phrase("Yth. Sdr. " + viewModel.to, small_font));
             cellHeaderContent2.AddElement(new Phrase("Bag. Gudang " + viewModel.storageDivision, small_font));
-            cellHeaderContent2.AddElement(new Phrase("Export/Banaran ", small_font));
+            //cellHeaderContent2.AddElement(new Phrase("Export/Banaran ", small_font));
+            cellHeaderContent2.AddElement(new Phrase("\n", small_font));
             cellHeaderContent2.AddElement(new Phrase("\n", normal_font));
             cellHeaderContent2.AddElement(new Phrase("D.O. Penjualan Lokal", header_font_bold_underlined));
             cellHeaderContent2.AddElement(new Phrase("\n", normal_font));
