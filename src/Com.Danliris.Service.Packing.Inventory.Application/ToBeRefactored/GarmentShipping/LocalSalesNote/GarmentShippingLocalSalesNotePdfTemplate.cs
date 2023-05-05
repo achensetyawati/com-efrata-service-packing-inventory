@@ -276,9 +276,9 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             #endregion
 
             document.Add(new Paragraph("PROSES PAYMENT HARAP DI TRANSFER KE :", normal_font));
-            document.Add(new Paragraph("MAYBANK INDONESIA - CABANG SLAMET RIYADI, SURAKARTA", normal_font));
-            document.Add(new Paragraph("NO. REK : 2.105.03721.0", normal_font));
-            document.Add(new Paragraph("A/N : PT. AMBASSADOR GARMINDO", normal_font));
+            document.Add(new Paragraph("Bank INDEX SELINDO - CABANG JAKARTA", normal_font));
+            document.Add(new Paragraph("NO. REK : 1271006188", normal_font));
+            document.Add(new Paragraph("A/N : PT Efrata Retailindo", normal_font));
             document.Add(new Paragraph(" ", normal_font));
 
             #region sign
