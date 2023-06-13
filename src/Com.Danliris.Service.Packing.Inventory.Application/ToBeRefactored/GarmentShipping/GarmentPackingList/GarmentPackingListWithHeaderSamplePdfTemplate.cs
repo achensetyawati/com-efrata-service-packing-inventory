@@ -889,12 +889,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             cb.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED), 6);
 
-            //#region REF
+            #region REF
 
             //var refY = height - marginTop + 25;
             //cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, "Ref. No. : FM-00-SP-24-005", width - marginRight, refY, 0);
 
-            //#endregion
+            #endregion
 
             #region LOGODL
 
