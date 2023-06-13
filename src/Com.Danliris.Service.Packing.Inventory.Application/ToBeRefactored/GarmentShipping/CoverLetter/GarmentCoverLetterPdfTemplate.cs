@@ -403,10 +403,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 var branchOfficeY = height - marginTop + 70;
 
-                //byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
-                //Image imageDL = Image.GetInstance(imageByteDL);
-                //imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
-                //cb.AddImage(imageDL, inlineImage: true);
+                byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
+                Image imageDL = Image.GetInstance(imageByteDL);
+                imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
+                cb.AddImage(imageDL, inlineImage: true);
                 //for (int i = 0; i < branchOffices.Length; i++)
                 //{
                 //    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices[i], marginLeft, branchOfficeY - 10 - (i * 8), 0);
@@ -431,7 +431,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 //cb.AddImage(image, inlineImage: true);
 
                 cb.SetFontAndSize(bf_header, 12);
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft, headOfficeY, 0);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft + 80, headOfficeY, 0);
 
                 string[] headOffices = {
                     "Head Office : Banaran, Grogol, Sukoharjo, Jawa Tengah ",
@@ -441,7 +441,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 for (int i = 0; i < headOffices.Length; i++)
                 {
                     cb.SetFontAndSize(bf, 6);
-                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], marginLeft, headOfficeY - 10 - (i * 10), 0);
+                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], marginLeft + 80, headOfficeY - 10 - (i * 10), 0);
                 }
 
                 #endregion
