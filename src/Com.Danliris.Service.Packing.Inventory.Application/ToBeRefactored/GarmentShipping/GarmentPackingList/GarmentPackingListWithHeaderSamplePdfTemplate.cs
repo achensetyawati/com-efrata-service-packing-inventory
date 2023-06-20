@@ -967,25 +967,31 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             #region LEFT
 
-            var branchOfficeY = height - marginTop + 50;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "BRANCH OFFICE :", marginLeft, branchOfficeY, 0);
-            string[] branchOffices = {
-                "Equity Tower 15th Floor Suite C",
-                "Sudirman Central Business District (SCBD) Lot 9",
-                "Jl. Jend. Sudirman Kav 52-53 Jakarta 12190",
-                "Tel. : (62-21) 2903-5388. 2903-5389 (Hunting)",
-                "Fax. : (62-21) 2903-5398",
-            };
-            for (int i = 0; i < branchOffices.Length; i++)
-            {
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices[i], marginLeft, branchOfficeY - 10 - (i * 8), 0);
-            }
+            var branchOfficeY = height - marginTop;
+            //var branchOfficeY = height - marginTop + 70;
+
+            byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
+            Image imageDL = Image.GetInstance(imageByteDL);
+            imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
+            cb.AddImage(imageDL, inlineImage: true);
+            //cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "BRANCH OFFICE :", marginLeft, branchOfficeY, 0);
+            //string[] branchOffices = {
+            //    "Equity Tower 15th Floor Suite C",
+            //    "Sudirman Central Business District (SCBD) Lot 9",
+            //    "Jl. Jend. Sudirman Kav 52-53 Jakarta 12190",
+            //    "Tel. : (62-21) 2903-5388. 2903-5389 (Hunting)",
+            //    "Fax. : (62-21) 2903-5398",
+            //};
+            //for (int i = 0; i < branchOffices.Length; i++)
+            //{
+            //    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices[i], marginLeft, branchOfficeY - 10 - (i * 8), 0);
+            //}
 
             #endregion
 
             #region CENTER
 
-            var headOfficeX = width / 2 + 30;
+            var headOfficeX = width / 2;
             var headOfficeY = height - marginTop + 45;
 
             //byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
