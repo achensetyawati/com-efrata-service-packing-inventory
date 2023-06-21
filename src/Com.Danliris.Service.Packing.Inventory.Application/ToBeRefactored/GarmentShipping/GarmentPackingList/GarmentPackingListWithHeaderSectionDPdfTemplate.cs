@@ -872,16 +872,16 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             #region LOGODL
 
-            //byte[] imageByteDL1 = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
-            //Image imageDL1 = Image.GetInstance(imageByteDL1);
-            //if (imageDL1.Width > 60)
-            //{
-            //    float percentage = 0.0f;
-            //    percentage = 60 / imageDL1.Width;
-            //    imageDL1.ScalePercent(percentage * 100);
-            //}
-            //imageDL1.SetAbsolutePosition(marginLeft, height - imageDL1.ScaledHeight - marginTop + 60);
-            //cb.AddImage(imageDL1, inlineImage: true);
+            byte[] imageByteDL1 = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
+            Image imageDL1 = Image.GetInstance(imageByteDL1);
+            if (imageDL1.Width > 60)
+            {
+                float percentage = 0.0f;
+                percentage = 60 / imageDL1.Width;
+                imageDL1.ScalePercent(percentage * 100);
+            }
+            imageDL1.SetAbsolutePosition(marginLeft, height - imageDL1.ScaledHeight - marginTop + 60);
+            cb.AddImage(imageDL1, inlineImage: true);
 
             #endregion
 
@@ -901,7 +901,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             //cb.AddImage(image11, inlineImage: true);
 
             cb.SetFontAndSize(bf_header, 12);
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft, branchOfficeY, 0);
+            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft + 80, branchOfficeY, 0);
 
             //cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Head Office : Jl. Merapi No. 23", marginLeft, branchOfficeY, 0);
             string[] branchOffices1 = {
@@ -914,7 +914,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             for (int i = 0; i < branchOffices1.Length; i++)
             {
                 cb.SetFontAndSize(bf, 8);
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices1[i], marginLeft, branchOfficeY - 10 - (i * 10), 0);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices1[i], marginLeft + 80, branchOfficeY - 10 - (i * 10), 0);
             }
 
             #endregion
