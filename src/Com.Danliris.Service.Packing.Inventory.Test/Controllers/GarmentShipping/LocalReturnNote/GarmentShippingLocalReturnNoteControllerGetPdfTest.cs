@@ -21,7 +21,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
 {
     public class GarmentShippingLocalReturnNoteControllerGetPdfTest 
     {
-        protected GarmentShippingLocalReturnNoteController GetController(IGarmentShippingLocalReturnNoteService service, IIdentityProvider identityProvider, IValidateService validateService)
+        protected GarmentShippingLocalReturnNoteController GetController(IGarmentShippingLocalReturnNoteService service, IGarmentShippingLocalSalesNoteService serviceSalesNote, IIdentityProvider identityProvider, IValidateService validateService)
         {
             var claimPrincipal = new Mock<ClaimsPrincipal>();
             var claims = new Claim[]
@@ -30,7 +30,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
             };
             claimPrincipal.Setup(claim => claim.Claims).Returns(claims);
 
-            var controller = new GarmentShippingLocalReturnNoteController(service, identityProvider, validateService)
+            var controller = new GarmentShippingLocalReturnNoteController(service, serviceSalesNote, identityProvider, validateService)
             {
                 ControllerContext = new ControllerContext()
                 {
@@ -145,14 +145,35 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
             }
         }
 
+        private GarmentShippingLocalSalesNoteViewModel ViewModelSn
+        {
+            get
+            {
+                return new GarmentShippingLocalSalesNoteViewModel()
+                {
+                    items = new List<GarmentShippingLocalSalesNoteItemViewModel>()
+                    {
+                        new GarmentShippingLocalSalesNoteItemViewModel
+                        {
+                            quantity = 1
+                        }
+                    }
+                };
+            }
+        }
+
         [Fact]
         public async Task Should_Success_GetPDF()
         {
             //v
             var serviceMock = new Mock<IGarmentShippingLocalReturnNoteService>();
+            var serviceSalesNoteMock = new Mock<IGarmentShippingLocalSalesNoteService>();
             serviceMock.Setup(s => s.ReadById(It.IsAny<int>())).ReturnsAsync(ViewModel);
             serviceMock.Setup(s => s.GetBuyer(It.IsAny<int>())).Returns(buyerVm);
+            serviceSalesNoteMock.Setup(s => s.ReadById(It.IsAny<int>())).ReturnsAsync(ViewModelSn);
+
             var service = serviceMock.Object;
+            var serviceSalesNote = serviceSalesNoteMock.Object;
 
             var validateServiceMock = new Mock<IValidateService>();
             validateServiceMock
@@ -163,7 +184,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
             var identityProviderMock = new Mock<IIdentityProvider>();
             var identityProvider = identityProviderMock.Object;
 
-            var controller = GetController(service, identityProvider, validateService);
+            var controller = GetController(service, serviceSalesNote, identityProvider, validateService);
             var response = await controller.GetPDF(1);
 
             Assert.NotNull(response);
@@ -176,8 +197,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
         {
             //v
             var serviceMock = new Mock<IGarmentShippingLocalReturnNoteService>();
+            var serviceSalesNoteMock = new Mock<IGarmentShippingLocalSalesNoteService>();
             serviceMock.Setup(s => s.ReadById(It.IsAny<int>())).ThrowsAsync(new Exception());
+            serviceSalesNoteMock.Setup(s => s.ReadById(It.IsAny<int>())).ReturnsAsync(ViewModelSn);
+
             var service = serviceMock.Object;
+            var serviceSalesNote = serviceSalesNoteMock.Object;
 
             var validateServiceMock = new Mock<IValidateService>();
             validateServiceMock
@@ -188,7 +213,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
             var identityProviderMock = new Mock<IIdentityProvider>();
             var identityProvider = identityProviderMock.Object;
 
-            var controller = GetController(service, identityProvider, validateService);
+            var controller = GetController(service, serviceSalesNote, identityProvider, validateService);
             //controller.ModelState.IsValid == false;
             var response = await controller.GetPDF(1);
 
@@ -199,8 +224,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
         public async Task Should_NotFound_GetPDF()
         {
             var serviceMock = new Mock<IGarmentShippingLocalReturnNoteService>();
+            var serviceSalesNoteMock = new Mock<IGarmentShippingLocalSalesNoteService>();
             serviceMock.Setup(s => s.ReadById(It.IsAny<int>())).ReturnsAsync(default(GarmentShippingLocalReturnNoteViewModel));
+            serviceSalesNoteMock.Setup(s => s.ReadById(It.IsAny<int>())).ReturnsAsync(ViewModelSn);
+
             var service = serviceMock.Object;
+            var serviceSalesNote = serviceSalesNoteMock.Object;
 
             var validateServiceMock = new Mock<IValidateService>();
             validateServiceMock
@@ -211,7 +240,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
             var identityProviderMock = new Mock<IIdentityProvider>();
             var identityProvider = identityProviderMock.Object;
 
-            var controller = GetController(service, identityProvider, validateService);
+            var controller = GetController(service, serviceSalesNote, identityProvider, validateService);
             var response = await controller.GetPDF(1);
 
             Assert.Equal((int)HttpStatusCode.NotFound, GetStatusCode(response));
@@ -221,8 +250,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
         public async Task Should_BadRequest_GetPDF()
         {
             var serviceMock = new Mock<IGarmentShippingLocalReturnNoteService>();
+            var serviceSalesNoteMock = new Mock<IGarmentShippingLocalSalesNoteService>();
             serviceMock.Setup(s => s.ReadById(It.IsAny<int>())).ThrowsAsync(new Exception());
+            serviceSalesNoteMock.Setup(s => s.ReadById(It.IsAny<int>())).ReturnsAsync(ViewModelSn);
+
             var service = serviceMock.Object;
+            var serviceSalesNote = serviceSalesNoteMock.Object;
 
             var validateServiceMock = new Mock<IValidateService>();
             validateServiceMock
@@ -233,7 +266,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Test.Controllers.GarmentShippin
             var identityProviderMock = new Mock<IIdentityProvider>();
             var identityProvider = identityProviderMock.Object;
 
-            var controller = GetController(service, identityProvider, validateService);
+            var controller = GetController(service, serviceSalesNote, identityProvider, validateService);
             controller.ModelState.AddModelError("test", "test");
             //controller.ModelState.IsValid == false;
             var response = await controller.GetPDF(1);

@@ -167,7 +167,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             if (ExportEstimationDate == null || ExportEstimationDate == DateTimeOffset.MinValue)
             {
-                yield return new ValidationResult("Tanggal Perkiraan Export tidak boleh kosong", new List<string> { "ExportEstimationDate" });
+                yield return new ValidationResult("Tanggal Perkiraan Pengiriman tidak boleh kosong", new List<string> { "ExportEstimationDate" });
             }
 
             if (Items == null || Items.Count < 1)
@@ -249,12 +249,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                                     errorDetail["Sizes"] = errorSizes;
                                     errorDetailsCount++;
                                 }
-                                //
-                                // if (detail.Sizes.Sum(s => s.Quantity) != (detail.CartonQuantity * detail.QuantityPCS))
-                                // {
-                                //     errorDetail["TotalQtySize"] = "Harus sama dengan Total Qty";
-                                //     errorDetailsCount++;
-                                // }
+
+                                if (detail.Sizes.Sum(s => s.Quantity) != (detail.CartonQuantity * detail.QuantityPCS))
+                                {
+                                    errorDetail["TotalQtySize"] = "Harus sama dengan Total Qty";
+                                    errorDetailsCount++;
+                                }
                             }
 
                             errorDetails.Add(errorDetail);
@@ -266,11 +266,11 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                             errorItemsCount++;
                         }
 
-                        //if (item.Quantity != item.Details.Sum(d => d.CartonQuantity * d.QuantityPCS))
-                        //{
-                        //    errorItem["totalQty"] = "Harus sama dengan Qty";
-                        //    errorItemsCount++;
-                        //}
+                        if (item.Quantity != item.Details.Sum(d => d.CartonQuantity * d.QuantityPCS))
+                        {
+                            errorItem["totalQty"] = "Harus sama dengan Qty";
+                            errorItemsCount++;
+                        }
                     }
 
                     errorItems.Add(errorItem);
@@ -286,42 +286,45 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             #region Measurement
 
-            if (Measurements == null || Measurements.Count < 1)
+            if(InvoiceType != "DS-Commercial" && InvoiceType != "SM-Non-Commercial")
             {
-                yield return new ValidationResult("Measurements tidak boleh kosong", new List<string> { "MeasurementsCount" });
-            }
-            else
-            {
-                int errorMeasurementsCount = 0;
-                List<Dictionary<string, object>> errorMeasurements = new List<Dictionary<string, object>>();
-
-                foreach (var measurement in Measurements)
+                if (Measurements == null || Measurements.Count < 1)
                 {
-                    Dictionary<string, object> errorMeasurement = new Dictionary<string, object>();
+                    yield return new ValidationResult("Measurements tidak boleh kosong", new List<string> { "MeasurementsCount" });
+                }
+                else
+                {
+                    int errorMeasurementsCount = 0;
+                    List<Dictionary<string, object>> errorMeasurements = new List<Dictionary<string, object>>();
 
-                    //if (measurement.Length <= 0)
-                    //{
-                    //    errorMeasurement["Length"] = "Length harus lebih dari 0";
-                    //    errorMeasurementsCount++;
-                    //}
+                    foreach (var measurement in Measurements)
+                    {
+                        Dictionary<string, object> errorMeasurement = new Dictionary<string, object>();
 
-                    errorMeasurements.Add(errorMeasurement);
+                        //if (measurement.Length <= 0)
+                        //{
+                        //    errorMeasurement["Length"] = "Length harus lebih dari 0";
+                        //    errorMeasurementsCount++;
+                        //}
+
+                        errorMeasurements.Add(errorMeasurement);
+                    }
+
+                    if (errorMeasurementsCount > 0)
+                    {
+                        yield return new ValidationResult(JsonConvert.SerializeObject(errorMeasurements), new List<string> { "Measurements" });
+                    }
                 }
 
-                if (errorMeasurementsCount > 0)
+                if (string.IsNullOrEmpty(SayUnit))
                 {
-                    yield return new ValidationResult(JsonConvert.SerializeObject(errorMeasurements), new List<string> { "Measurements" });
+                    yield return new ValidationResult("Unit SAY tidak boleh kosong", new List<string> { "SayUnit" });
                 }
-            }
 
-            if (string.IsNullOrEmpty(SayUnit))
-            {
-                yield return new ValidationResult("Unit SAY tidak boleh kosong", new List<string> { "SayUnit" });
-            }
-
-            if (string.IsNullOrEmpty(OtherCommodity))
-            {
-                yield return new ValidationResult("Other Commodity tidak boleh kosong", new List<string> { "OtherCommodity" });
+                if (string.IsNullOrEmpty(OtherCommodity))
+                {
+                    yield return new ValidationResult("Other Commodity tidak boleh kosong", new List<string> { "OtherCommodity" });
+                }
             }
 
             #endregion

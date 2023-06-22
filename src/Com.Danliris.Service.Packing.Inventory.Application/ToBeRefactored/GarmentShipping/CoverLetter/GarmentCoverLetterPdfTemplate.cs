@@ -57,7 +57,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                                                $"{viewModel.destination} \n" +
                                                $"{viewModel.address} \n" +
                                                $"PIC : {viewModel.pic} \n\n" +
-                                               $"Forwarder : {viewModel.forwarder.name} \n\n" +
+                                               //$"Forwarder : {viewModel.forwarder.name} \n\n" +
                                                $"ATTN  : {viewModel.attn} \n" +
                                                $"PHONE : {viewModel.phone}", normal_font);
             cellHeaderLeft.Rowspan = 7;
@@ -112,9 +112,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             document.Add(new Paragraph("\n", normal_font));
 
             #region detail
-            PdfPTable tableDetail = new PdfPTable(7);
+            PdfPTable tableDetail = new PdfPTable(4);
             tableDetail.WidthPercentage = 100;
-            tableDetail.SetWidths(new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f });
+            //tableDetail.SetWidths(new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f });
+            tableDetail.SetWidths(new float[] { 1f, 1f, 1f, 1f });
             PdfPCell cellDetail = new PdfPCell() { MinimumHeight = 15, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
 
             double cbmtotal = 0;
@@ -133,16 +134,16 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             tableDetail.AddCell(cellDetail);
             cellDetail.Phrase = new Phrase("Pengemudi", normal_font);
             tableDetail.AddCell(cellDetail);
-            cellDetail.Phrase = new Phrase("No Kontainer", normal_font);
-            tableDetail.AddCell(cellDetail);
-            cellDetail.Phrase = new Phrase("Seal Pelayaran", normal_font);
-            tableDetail.AddCell(cellDetail);
-            cellDetail.Phrase = new Phrase("Seal Dan Liris", normal_font);
-            tableDetail.AddCell(cellDetail);
+            //cellDetail.Phrase = new Phrase("No Kontainer", normal_font);
+            //tableDetail.AddCell(cellDetail);
+            //cellDetail.Phrase = new Phrase("Seal Pelayaran", normal_font);
+            //tableDetail.AddCell(cellDetail);
+            //cellDetail.Phrase = new Phrase("Seal Dan Liris", normal_font);
+            //tableDetail.AddCell(cellDetail);
             cellDetail.Phrase = new Phrase("Jumlah Muatan", normal_font);
             tableDetail.AddCell(cellDetail);
 
-            Paragraph Truck = new Paragraph($"EMKL : {viewModel.emkl.Name} \n\n" +
+            Paragraph Truck = new Paragraph(//$"EMKL : {viewModel.emkl.Name} \n\n" +
                                             $"Truk : {viewModel.truck}", normal_font);
             cellDetail.Phrase = Truck;
             cellDetail.VerticalAlignment = Element.ALIGN_TOP;
@@ -152,12 +153,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             tableDetail.AddCell(cellDetail);
             cellDetail.Phrase = new Phrase(viewModel.driver, normal_font);
             tableDetail.AddCell(cellDetail);
-            cellDetail.Phrase = new Phrase(viewModel.containerNo, normal_font);
-            tableDetail.AddCell(cellDetail);
-            cellDetail.Phrase = new Phrase(viewModel.shippingSeal, normal_font);
-            tableDetail.AddCell(cellDetail);
-            cellDetail.Phrase = new Phrase(viewModel.dlSeal, normal_font);
-            tableDetail.AddCell(cellDetail);
+            //cellDetail.Phrase = new Phrase(viewModel.containerNo, normal_font);
+            //tableDetail.AddCell(cellDetail);
+            //cellDetail.Phrase = new Phrase(viewModel.shippingSeal, normal_font);
+            //tableDetail.AddCell(cellDetail);
+            //cellDetail.Phrase = new Phrase(viewModel.dlSeal, normal_font);
+            //tableDetail.AddCell(cellDetail);
             Paragraph weight = new Paragraph($"GW  : {string.Format("{0:n2}", pl.GrossWeight)} KGS \n\n" +
                                            $"NW  : {string.Format("{0:n2}", pl.NettWeight)} KGS \n\n" +
                                            $"Volume : {string.Format("{0:n2}", Math.Round(cbmtotal, 2))} m", normal_font);
@@ -175,9 +176,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             #endregion
 
             #region marks
-            PdfPTable tableMark = new PdfPTable(4);
+            PdfPTable tableMark = new PdfPTable(2);
             tableMark.WidthPercentage = 100;
-            tableMark.SetWidths(new float[] { 1f, 3f, 1f, 3f });
+            //tableMark.SetWidths(new float[] { 1f, 3f, 1f, 3f });
+            tableMark.SetWidths(new float[] { 1f, 3f});
             PdfPCell cellMark = new PdfPCell() { MinimumHeight = 15, Border = Rectangle.BOTTOM_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
 
             cellMark.Phrase = new Phrase("Shippig Mark :", normal_font);
@@ -187,50 +189,50 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellMark.Phrase = new Phrase(pl.ShippingMark, normal_font);
             tableMark.AddCell(cellMark);
 
-            string sealType = "";
-            string seal = "";
-            if (!string.IsNullOrEmpty(viewModel.shippingSeal))
-            {
-                sealType += "Seal Pelayaran \n";
-                seal += ": " + viewModel.shippingSeal + "\n";
-            }
-            if (!string.IsNullOrEmpty(viewModel.dlSeal))
-            {
-                sealType += "Seal DL \n";
-                seal += ": " + viewModel.dlSeal + "\n";
-            }
-            if (!string.IsNullOrEmpty(viewModel.emklSeal))
-            {
-                sealType += "Seal EMKL \n";
-                seal += ": " + viewModel.emklSeal + "\n";
-            }
+            //string sealType = "";
+            //string seal = "";
+            //if (!string.IsNullOrEmpty(viewModel.shippingSeal))
+            //{
+            //    sealType += "Seal Pelayaran \n";
+            //    seal += ": " + viewModel.shippingSeal + "\n";
+            //}
+            //if (!string.IsNullOrEmpty(viewModel.dlSeal))
+            //{
+            //    sealType += "Seal DL \n";
+            //    seal += ": " + viewModel.dlSeal + "\n";
+            //}
+            //if (!string.IsNullOrEmpty(viewModel.emklSeal))
+            //{
+            //    sealType += "Seal EMKL \n";
+            //    seal += ": " + viewModel.emklSeal + "\n";
+            //}
 
 
-            cellMark.Phrase = new Phrase(sealType, normal_font);
-            cellMark.Rowspan = 1;
-            cellMark.Border = Rectangle.NO_BORDER;
-            cellMark.HorizontalAlignment = Element.ALIGN_LEFT;
-            tableMark.AddCell(cellMark);
-
-            cellMark.Phrase = new Phrase(seal, normal_font);
-            cellMark.Rowspan = 1;
-            cellMark.Border = Rectangle.NO_BORDER;
-            cellMark.HorizontalAlignment = Element.ALIGN_LEFT;
-            tableMark.AddCell(cellMark);
-
-            //cellMark.Phrase = new Phrase("SEND TO          :", normal_font);
-            //cellMark.Colspan = 1;
-            //cellMark.HorizontalAlignment = Element.ALIGN_RIGHT;
-            //cellMark.Border = Rectangle.BOTTOM_BORDER;
-            //tableMark.AddCell(cellMark);
-
-            //cellMark.Phrase = new Phrase($"{buyer.Name} \n" +
-            //                             $"{buyer.Address} \n", normal_font);
+            //cellMark.Phrase = new Phrase(sealType, normal_font);
+            //cellMark.Rowspan = 1;
+            //cellMark.Border = Rectangle.NO_BORDER;
             //cellMark.HorizontalAlignment = Element.ALIGN_LEFT;
             //tableMark.AddCell(cellMark);
 
-            //tableMark.SpacingAfter = 15;
-            //document.Add(tableMark);
+            //cellMark.Phrase = new Phrase(seal, normal_font);
+            //cellMark.Rowspan = 1;
+            //cellMark.Border = Rectangle.NO_BORDER;
+            //cellMark.HorizontalAlignment = Element.ALIGN_LEFT;
+            //tableMark.AddCell(cellMark);
+
+            ////cellMark.Phrase = new Phrase("SEND TO          :", normal_font);
+            ////cellMark.Colspan = 1;
+            ////cellMark.HorizontalAlignment = Element.ALIGN_RIGHT;
+            ////cellMark.Border = Rectangle.BOTTOM_BORDER;
+            ////tableMark.AddCell(cellMark);
+
+            ////cellMark.Phrase = new Phrase($"{buyer.Name} \n" +
+            ////                             $"{buyer.Address} \n", normal_font);
+            ////cellMark.HorizontalAlignment = Element.ALIGN_LEFT;
+            ////tableMark.AddCell(cellMark);
+
+            ////tableMark.SpacingAfter = 15;
+            ////document.Add(tableMark);
             #endregion
 
             document.Add(new Paragraph("Demikian harap diterima dengan baik dan terima kasih.", normal_font));
@@ -251,7 +253,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellSign.Colspan = 1;
             tableSign.AddCell(cellSign);
 
-            cellSign.Phrase = new Phrase("                          Hormat Kami, \n\n\n\n\n\n", normal_font);
+            cellSign.Phrase = new Phrase("                             Hormat Kami, \n\n\n\n\n\n", normal_font);
             cellSign.Colspan = 1;
             tableSign.AddCell(cellSign);
 
@@ -283,7 +285,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellSign.Phrase = new Phrase("Sat Pam", normal_font);
             tableSign.AddCell(cellSign);
 
-            cellSign.Phrase = new Phrase("AG2", normal_font);
+            cellSign.Phrase = new Phrase("EFRATA GARMINDO UTAMA", normal_font);
             tableSign.AddCell(cellSign);
 
             cellSign.Phrase = new Phrase("Shipping Staff", normal_font);
@@ -390,7 +392,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 cb.BeginText();
 
                 BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
-
+                BaseFont bf_header = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
                 float height = writer.PageSize.Height, width = writer.PageSize.Width;
                 float marginLeft = document.LeftMargin - 10, marginTop = document.TopMargin, marginRight = document.RightMargin - 10;
 
@@ -417,26 +419,29 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 var headOfficeX = width / 2 - 200;
                 var headOfficeY = height - marginTop + 110;
 
-                byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
-                Image image = Image.GetInstance(imageByte);
-                if (image.Width > 160)
-                {
-                    float percentage = 0.0f;
-                    percentage = 160 / image.Width;
-                    image.ScalePercent(percentage * 100);
-                }
-                image.SetAbsolutePosition(headOfficeX, headOfficeY);
-                cb.AddImage(image, inlineImage: true);
+                //byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
+                //Image image = Image.GetInstance(imageByte);
+                //if (image.Width > 160)
+                //{
+                //    float percentage = 0.0f;
+                //    percentage = 160 / image.Width;
+                //    image.ScalePercent(percentage * 100);
+                //}
+                //image.SetAbsolutePosition(headOfficeX, headOfficeY);
+                //cb.AddImage(image, inlineImage: true);
+
+                cb.SetFontAndSize(bf_header, 12);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft + 80, headOfficeY, 0);
 
                 string[] headOffices = {
-                "PT. AMBASSADOR GARMINDO",
-                "Head Office : Banaran, Grogol, Sukoharjo, Jawa Tengah ",
-                "57552",
-                "TELP.: (0271) 732888, 7652913",
-            };
+                    "Head Office : Banaran, Grogol, Sukoharjo, Jawa Tengah ",
+                    "57552",
+                    "Telp. (0271) 714400, 719911",
+                };
                 for (int i = 0; i < headOffices.Length; i++)
                 {
-                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], headOfficeX, headOfficeY - image.ScaledHeight - (i * 10), 0);
+                    cb.SetFontAndSize(bf, 6);
+                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], marginLeft + 80, headOfficeY - 10 - (i * 10), 0);
                 }
 
                 #endregion

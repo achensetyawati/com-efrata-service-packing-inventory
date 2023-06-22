@@ -123,17 +123,17 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             tableMark.SetWidths(new float[] { 1f, 6f });
             PdfPCell cellMark = new PdfPCell() { MinimumHeight = 15, Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
 
-            cellMark.Phrase = new Phrase("No Bea Cukai :", normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase("No Bea Cukai :", normal_font);
+            //tableMark.AddCell(cellMark);
 
-            cellMark.Phrase = new Phrase(viewModel.bcNo, normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase(viewModel.bcNo, normal_font);
+            //tableMark.AddCell(cellMark);
 
-            cellMark.Phrase = new Phrase("Tgl Bea Cukai :", normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase("Tgl Bea Cukai :", normal_font);
+            //tableMark.AddCell(cellMark);
 
-            cellMark.Phrase = new Phrase(viewModel.bcdate.GetValueOrDefault().ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("en-EN")), normal_font);
-            tableMark.AddCell(cellMark);
+            //cellMark.Phrase = new Phrase(viewModel.bcdate.GetValueOrDefault().ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("en-EN")), normal_font);
+            //tableMark.AddCell(cellMark);
 
             cellMark.Phrase = new Phrase("Shippig Mark :", normal_font);
             tableMark.AddCell(cellMark);
@@ -259,10 +259,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 var branchOfficeY = height - marginTop + 70;
 
-                byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
-                Image imageDL = Image.GetInstance(imageByteDL);
-                imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
-                cb.AddImage(imageDL, inlineImage: true);
+                //byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_58_58);
+                //Image imageDL = Image.GetInstance(imageByteDL);
+                //imageDL.SetAbsolutePosition(marginLeft, branchOfficeY);
+                //cb.AddImage(imageDL, inlineImage: true);
                 //for (int i = 0; i < branchOffices.Length; i++)
                 //{
                 //    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices[i], marginLeft, branchOfficeY - 10 - (i * 8), 0);
@@ -287,15 +287,15 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 //cb.AddImage(image, inlineImage: true);
 
                 string[] headOffices = {
-                "PT. AMBASSADOR GARMINDO",
+                "PT. EFRATA GARMINDO UTAMA",
                 "Banaran, Grogol, Sukoharjo, Jawa Tengah",
                 "57552",
-                "Telp (0271) 732888, 7652913",
+                "Telp. (0271) 714400, 719911"
                 };
 
                 for (int i = 0; i < headOffices.Length; i++)
                 {
-                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], headOfficeX, headOfficeY - 0 - (i * 10), 0);
+                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], marginLeft, headOfficeY - 0 - (i * 10), 0);
                 }
 
                 #endregion

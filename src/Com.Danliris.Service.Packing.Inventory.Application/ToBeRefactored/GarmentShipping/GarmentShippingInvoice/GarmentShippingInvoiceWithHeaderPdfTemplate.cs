@@ -104,13 +104,13 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             bodyTableHeader.Colspan = 2;
             bodyTable.AddCell(bodyTableHeader);
 
-            bodyTableHeader.Phrase = new Phrase("UNIT PRICE\n" + viewModel.CPrice + " IN USD", normal_font);
+            bodyTableHeader.Phrase = new Phrase("UNIT PRICE\n" + viewModel.CPrice + " IN " + viewModel.Items.FirstOrDefault().CurrencyCode, normal_font);
             //bodyTableHeader.HorizontalAlignment = Element.ALIGN_CENTER;
             //bodyTableHeader.VerticalAlignment = Element.ALIGN_CENTER;
             bodyTableHeader.Colspan = 1;
             bodyTable.AddCell(bodyTableHeader);
 
-            bodyTableHeader.Phrase = new Phrase("TOTAL PRICE\n" + viewModel.CPrice + " IN USD", normal_font);
+            bodyTableHeader.Phrase = new Phrase("TOTAL PRICE\n" + viewModel.CPrice + " IN " + viewModel.Items.FirstOrDefault().CurrencyCode, normal_font);
             //bodyTableHeader.HorizontalAlignment = Element.ALIGN_CENTER;
             //bodyTableHeader.VerticalAlignment = Element.ALIGN_CENTER;
             bodyTable.AddCell(bodyTableHeader);
@@ -342,7 +342,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 calculationCellLeft.Phrase = new Phrase("TOTAL AMOUNT FOB ", normal_font);
                 calculationTable.AddCell(calculationCellLeft);
-                calculationCellLeft.Phrase = new Phrase(": USD ", normal_font);
+                calculationCellLeft.Phrase = new Phrase($": {viewModel.Items.FirstOrDefault().CurrencyCode} ", normal_font);
                 calculationTable.AddCell(calculationCellLeft);
                 calculationCellRight.Phrase = new Phrase(string.Format("{0:n2}", totalAmount), normal_font);
                 calculationTable.AddCell(calculationCellRight);
@@ -356,7 +356,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                     totalPaid += adj.AdjustmentValue;
                     calculationCellLeft.Phrase = new Phrase($"{adj.AdjustmentDescription} ", normal_font);
                     calculationTable.AddCell(calculationCellLeft);
-                    calculationCellLeft.Phrase = new Phrase(": USD ", normal_font);
+                    calculationCellLeft.Phrase = new Phrase($": {viewModel.Items.FirstOrDefault().CurrencyCode} ", normal_font);
                     calculationTable.AddCell(calculationCellLeft);
                     calculationCellRight.Phrase = new Phrase(string.Format("{0:n2}", adj.AdjustmentValue), normal_font);
                     calculationTable.AddCell(calculationCellRight);
@@ -367,7 +367,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 calculationCellLeft.Phrase = new Phrase($"TOTAL AMOUNT TO BE PAID ", bold_font);
                 calculationCellLeft.Border = Rectangle.TOP_BORDER;
                 calculationTable.AddCell(calculationCellLeft);
-                calculationCellLeft.Phrase = new Phrase(": USD ", bold_font);
+                calculationCellLeft.Phrase = new Phrase($": {viewModel.Items.FirstOrDefault().CurrencyCode} ", bold_font);
                 calculationTable.AddCell(calculationCellLeft);
                 calculationCellRight.Phrase = new Phrase(string.Format("{0:n2}", totalPaid), bold_font);
                 calculationCellRight.Border = Rectangle.TOP_BORDER;
@@ -386,7 +386,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 {
                     amountToText = CurrencyToText.ToWords(totalPaid);
                 }
-                calculationCellLeft.Phrase = new Phrase($"SAY : US DOLLARS {amountToText.ToUpper()} ONLY ///", normal_font);
+                calculationCellLeft.Phrase = new Phrase($"SAY : {viewModel.Items.FirstOrDefault().CurrencyCode} " + amountToText.ToUpper() + " ONLY ///", normal_font);
                 calculationCellLeft.Colspan = 4;
                 calculationCellLeft.Border = Rectangle.NO_BORDER;
                 calculationTable.AddCell(calculationCellLeft);
@@ -396,7 +396,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             else
             {
                 string amountToText = CurrencyToText.ToWords(totalAmount);
-                document.Add(new Paragraph("SAY   : US DOLLARS " + amountToText.ToUpper() + " ONLY ///", normal_font));
+                document.Add(new Paragraph($"SAY   : {viewModel.Items.FirstOrDefault().CurrencyCode} " + amountToText.ToUpper() + " ONLY ///", normal_font));
                 document.Add(new Paragraph("\n", normal_font));
             }
             #endregion
@@ -643,12 +643,13 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
         }
         public override void OnStartPage(PdfWriter writer, Document document)
         {
-
             PdfContentByte cb = writer.DirectContent;
             cb.BeginText();
-            Font normal_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 7);
+
             Font big_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 14, Font.BOLD);
             BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
+            BaseFont bf_header = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
+            Font normal_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 7);
             Font normal_font_underlined = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 7, Font.UNDERLINE);
 
             float height = writer.PageSize.Height, width = writer.PageSize.Width;
@@ -678,27 +679,31 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             var branchOfficeY = height - marginTop + 50;
 
-            byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
-            Image image1 = Image.GetInstance(imageByte);
-            if (image1.Width > 100)
-            {
-                float percentage = 0.0f;
-                percentage = 100 / image1.Width;
-                image1.ScalePercent(percentage * 100);
-            }
-            image1.SetAbsolutePosition(marginLeft + 80, height - image1.ScaledHeight - marginTop + 75);
-            cb.AddImage(image1, inlineImage: true);
+            //byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
+            //Image image1 = Image.GetInstance(imageByte);
+            //if (image1.Width > 100)
+            //{
+            //    float percentage = 0.0f;
+            //    percentage = 100 / image1.Width;
+            //    image1.ScalePercent(percentage * 100);
+            //}
+            //image1.SetAbsolutePosition(marginLeft + 80, height - image1.ScaledHeight - marginTop + 75);
+            //cb.AddImage(image1, inlineImage: true);
 
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Head Office :", marginLeft + 80, branchOfficeY, 0);
+            cb.SetFontAndSize(bf_header, 12);
+            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft + 80, branchOfficeY, 0);
+            //cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Head Office :", marginLeft + 80, branchOfficeY, 0);
+
             string[] branchOffices = {
+                "Head Office :",
                 "Banaran, Grogol, Sukoharjo, Jawa Tengah",
                 "57552",
-                "Telp. (0271) 732888, 7652913",
-                
-                "Website : www.ambassadorgarmindo.com",
+                "Telp. (0271) 714400, 719911",
+                "Website : www.efrataretailindo.com",
             };
             for (int i = 0; i < branchOffices.Length; i++)
             {
+                cb.SetFontAndSize(bf, 7);
                 cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices[i], marginLeft + 80, branchOfficeY - 10 - (i * 10), 0);
             }
 
@@ -810,7 +815,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             tabledetailOrders2.AddCell(cellDetailContentLeft);
 
 
-            cellDetailContentLeft.Phrase = new Phrase("SAILING ON OR ABOUT", normal_font);
+            cellDetailContentLeft.Phrase = new Phrase("DELIVERY ON OR ABOUT", normal_font);
             cellDetailContentLeft.Colspan = 1;
             cellDetailContentLeft.Border = Rectangle.LEFT_BORDER;
             tabledetailOrders2.AddCell(cellDetailContentLeft);

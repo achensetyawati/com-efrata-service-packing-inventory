@@ -5,6 +5,7 @@ using Com.Danliris.Service.Packing.Inventory.Application.Utilities;
 using Com.Danliris.Service.Packing.Inventory.Data.Models.Garmentshipping.ShippingLocalPriceCorrectionNote;
 using Com.Danliris.Service.Packing.Inventory.Infrastructure.IdentityProvider;
 using Com.Danliris.Service.Packing.Inventory.Infrastructure.Repositories.GarmentShipping.ShippingLocalPriceCorrectionNote;
+using Com.Danliris.Service.Packing.Inventory.Infrastructure.Repositories.GarmentShipping.ShippingLocalSalesNote;
 using Com.Danliris.Service.Packing.Inventory.Infrastructure.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -19,12 +20,14 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IGarmentShippingLocalPriceCorrectionNoteRepository _repository;
+        private readonly IGarmentShippingLocalSalesNoteRepository _repositorySalesNote;
         private readonly IIdentityProvider _identityProvider;
 
         public GarmentShippingLocalPriceCorrectionNoteService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _repository = serviceProvider.GetService<IGarmentShippingLocalPriceCorrectionNoteRepository>();
+            _repositorySalesNote = serviceProvider.GetService<IGarmentShippingLocalSalesNoteRepository>();
             _identityProvider = serviceProvider.GetService<IIdentityProvider>();
         }
 
@@ -237,10 +240,16 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             var data = await _repository.ReadByIdAsync(id);
             var viewModel = MapToViewModel(data);
             var buyer = await GetBuyer(viewModel.salesNote.buyer.Id);
+            var salesNote = await _repositorySalesNote.ReadByIdAsync(data.SalesNoteId);
+            Vat vat = new Vat()
+            {
+                id = salesNote.VatRate,
+                rate = salesNote.VatRate
+            };
 
             var PdfTemplate = new GarmentShippingLocalPriceCorrectionNotePdfTemplate();
 
-            var stream = PdfTemplate.GeneratePdfTemplate(viewModel, buyer, _identityProvider.TimezoneOffset);
+            var stream = PdfTemplate.GeneratePdfTemplate(viewModel, buyer, vat, _identityProvider.TimezoneOffset);
 
             return new MemoryStreamResult(stream, "Nota Koreksi " + data.CorrectionNoteNo + ".pdf");
         }

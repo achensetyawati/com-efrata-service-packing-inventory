@@ -54,7 +54,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             if (emkl == null || emkl.Id == 0)
             {
-                yield return new ValidationResult("EMKL tidak boleh kosong", new List<string> { "emkl" });
+                yield return new ValidationResult("Trucking tidak boleh kosong", new List<string> { "emkl" });
             }
 
             if (string.IsNullOrEmpty(destination))
@@ -92,10 +92,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 yield return new ValidationResult("Order tidak boleh kosong", new List<string> { "order" });
             }
 
-            if (forwarder == null || forwarder.id == 0)
-            {
-                yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
-            }
+            //if (forwarder == null || forwarder.id == 0)
+            //{
+            //    yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
+            //}
 
             if (string.IsNullOrEmpty(truck))
             {
@@ -117,14 +117,14 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             //    yield return new ValidationResult("Container No tidak boleh kosong", new List<string> { "containerNo" });
             //}
 
-            if (string.IsNullOrEmpty(freight))
-            {
-                yield return new ValidationResult("Freight tidak boleh kosong", new List<string> { "freight" });
-            }
+            //if (string.IsNullOrEmpty(freight))
+            //{
+            //    yield return new ValidationResult("Freight tidak boleh kosong", new List<string> { "freight" });
+            //}
 
             if (exportEstimationDate == null || exportEstimationDate == DateTimeOffset.MinValue)
             {
-                yield return new ValidationResult("Tgl Perkiraan Export tidak boleh kosong", new List<string> { "exportEstimationDate" });
+                yield return new ValidationResult("Tgl Perkiraan Pengiriman tidak boleh kosong", new List<string> { "exportEstimationDate" });
             }
 
             if (string.IsNullOrEmpty(unit))

@@ -784,23 +784,25 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             float height = writer.PageSize.Height, width = writer.PageSize.Width;
             float marginLeft = document.LeftMargin, marginTop = document.TopMargin, marginRight = document.RightMargin, marginBottom = document.BottomMargin;
+            BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
+            BaseFont bf_header = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
             Font normal_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 8);
             int maxSizesCount = viewModel.Items.Max(i => i.Details.Max(d => d.Sizes.GroupBy(g => g.Size.Id).Count()));
 
             if (maxSizesCount > 11)
             {
-                cb.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED), 6);
+                cb.SetFontAndSize(bf, 6);
 
                 #region LEFT
 
-                var logoY = height - marginTop + 65;
+                //var logoY = height - marginTop + 65;
 
-                byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_211_200_BW);
-                Image imageDL = Image.GetInstance(imageByteDL);
-                imageDL.ScaleAbsolute(60f, 60f);
-                var newColor = System.Drawing.Color.Red;
-                imageDL.SetAbsolutePosition(marginLeft, logoY);
-                cb.AddImage(imageDL, inlineImage: true);
+                //byte[] imageByteDL = Convert.FromBase64String(Base64ImageStrings.LOGO_AG_211_200_BW);
+                //Image imageDL = Image.GetInstance(imageByteDL);
+                //imageDL.ScaleAbsolute(60f, 60f);
+                //var newColor = System.Drawing.Color.Red;
+                //imageDL.SetAbsolutePosition(marginLeft, logoY);
+                //cb.AddImage(imageDL, inlineImage: true);
 
                 #endregion
 
@@ -809,27 +811,30 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 var headOfficeX = marginLeft + 75;
                 var headOfficeY = height - marginTop + 105;
 
-                byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
-                Image image = Image.GetInstance(imageByte);
-                if (image.Width > 160)
-                {
-                    float percentage = 0.0f;
-                    percentage = 160 / image.Width;
-                    image.ScalePercent(percentage * 100);
-                }
-                image.SetAbsolutePosition(headOfficeX, headOfficeY);
-                cb.AddImage(image, inlineImage: true);
+                //byte[] imageByte = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
+                //Image image = Image.GetInstance(imageByte);
+                //if (image.Width > 160)
+                //{
+                //    float percentage = 0.0f;
+                //    percentage = 160 / image.Width;
+                //    image.ScalePercent(percentage * 100);
+                //}
+                //image.SetAbsolutePosition(headOfficeX, headOfficeY);
+                //cb.AddImage(image, inlineImage: true);
+
+                cb.SetFontAndSize(bf_header, 12);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft, headOfficeY, 0);
 
                 string[] headOffices = {
                     "Head Office : Kelurahan Banaran, Kecamatan Grogol,",
                     "Sukoharjo - Indonesia",
-                    "PO BOX 166 Solo 57100",
-                    "Telp. 0271-732888, 7652913",
-                    "Website : www.ambassadorgarmindo.com",
+                    "Telp. (0271) 714400, 719911",
+                    "Website : www.efrataretailindo.com",
                 };
                 for (int i = 0; i < headOffices.Length; i++)
                 {
-                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], headOfficeX, headOfficeY + 10 - image.ScaledHeight - (i * 6), 0);
+                    cb.SetFontAndSize(bf, 6);
+                    cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, headOffices[i], headOfficeX, headOfficeY - 10 - (i * 6), 0);
                 }
 
                 #endregion
@@ -858,7 +863,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 #endregion
 
-                cb.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED), 16);
+                cb.SetFontAndSize(bf, 16);
 
                 #region TITLE
 
@@ -868,14 +873,14 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 #endregion
             }
 
-            cb.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED), 8);
+            cb.SetFontAndSize(bf_header, 8);
 
-            //#region REF
+            #region REF
 
             //var refY = height - marginTop + 25;
             //cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, "Ref. No. : FM-00-SP-24-005", width - marginRight, refY, 0);
 
-            //#endregion
+            #endregion
 
             #region LOGODL
 
@@ -896,28 +901,31 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             var branchOfficeY = height - marginTop + 50;
 
-            byte[] imageByteAdd = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
-            Image image11 = Image.GetInstance(imageByteAdd);
-            if (image11.Width > 100)
-            {
-                float percentage = 0.0f;
-                percentage = 100 / image11.Width;
-                image11.ScalePercent(percentage * 100);
-            }
-            image11.SetAbsolutePosition(marginLeft + 80, height - image11.ScaledHeight - marginTop + 75);
-            cb.AddImage(image11, inlineImage: true);
+            //byte[] imageByteAdd = Convert.FromBase64String(Base64ImageStrings.LOGO_NAME);
+            //Image image11 = Image.GetInstance(imageByteAdd);
+            //if (image11.Width > 100)
+            //{
+            //    float percentage = 0.0f;
+            //    percentage = 100 / image11.Width;
+            //    image11.ScalePercent(percentage * 100);
+            //}
+            //image11.SetAbsolutePosition(marginLeft + 80, height - image11.ScaledHeight - marginTop + 75);
+            //cb.AddImage(image11, inlineImage: true);
 
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Head Office : Jl. Merapi No. 23", marginLeft + 80, branchOfficeY, 0);
+            cb.SetFontAndSize(bf_header, 12);
+            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft + 80, branchOfficeY, 0);
+
+            //cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Head Office : Jl. Merapi No. 23", marginLeft, branchOfficeY, 0);
             string[] branchOffices1 = {
+                "Head Office : Jl. Merapi No. 23",
                 "Banaran, Grogol, Sukoharjo 57552",
                 "Central Java, Indonesia",
-                "Tel. : 0271-732888",
-                "Fax. : (+62-271) 740777, 735222",
-                "PO BOX 166 Solo, 57100",
-                "Website : www.ambassadorgarmindo.com",
+                "Telp. (0271) 714400, 719911",
+                "Website : www.efrataretailindo.com",
             };
             for (int i = 0; i < branchOffices1.Length; i++)
             {
+                cb.SetFontAndSize(bf, 8);
                 cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, branchOffices1[i], marginLeft + 80, branchOfficeY - 10 - (i * 10), 0);
             }
 

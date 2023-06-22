@@ -276,9 +276,9 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             #endregion
 
             document.Add(new Paragraph("PROSES PAYMENT HARAP DI TRANSFER KE :", normal_font));
-            document.Add(new Paragraph("MAYBANK INDONESIA - CABANG SLAMET RIYADI, SURAKARTA", normal_font));
-            document.Add(new Paragraph("NO. REK : 2.105.03721.0", normal_font));
-            document.Add(new Paragraph("A/N : PT. AMBASSADOR GARMINDO", normal_font));
+            document.Add(new Paragraph("Bank INDEX SELINDO - CABANG JAKARTA", normal_font));
+            document.Add(new Paragraph("NO. REK : 1271006188", normal_font));
+            document.Add(new Paragraph("A/N : PT Efrata Retailindo", normal_font));
             document.Add(new Paragraph(" ", normal_font));
 
             #region sign
@@ -370,10 +370,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
 
             cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("PT. AMBASSADOR GARMINDO", header_font_bold));
+            cellHeaderContent1.AddElement(new Phrase("PT. EFRATA GARMINDO UTAMA", header_font_bold));
             cellHeaderContent1.AddElement(new Phrase("Banaran, Grogol, Sukoharjo, Jawa Tengah", normal_font));
             cellHeaderContent1.AddElement(new Phrase("57552", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("Telp (0271) 732888, 7652913", normal_font));
+            cellHeaderContent1.AddElement(new Phrase("Telp (0271) 714400, 719911", normal_font));
             cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
             tableHeader.AddCell(cellHeaderContent1);
 

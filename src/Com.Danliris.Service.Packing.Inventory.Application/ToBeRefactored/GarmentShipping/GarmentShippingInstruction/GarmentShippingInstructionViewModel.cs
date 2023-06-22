@@ -79,10 +79,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 yield return new ValidationResult("Carton No tidak boleh kosong", new List<string> { "CartonNo" });
             }
 
-            if (string.IsNullOrEmpty(PortOfDischarge))
-            {
-                yield return new ValidationResult("Port Of Discharge tidak boleh kosong", new List<string> { "PortOfDischarge" });
-            }
+            //if (string.IsNullOrEmpty(PortOfDischarge))
+            //{
+            //    yield return new ValidationResult("Port Of Discharge tidak boleh kosong", new List<string> { "PortOfDischarge" });
+            //}
 
             if (string.IsNullOrEmpty(PlaceOfDelivery))
             {
@@ -124,10 +124,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 yield return new ValidationResult("Notify tidak boleh kosong", new List<string> { "Notify" });
             }
 
-            if (forwarder == null || forwarder.id == 0)
-            {
-                yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
-            }
+            //if (forwarder == null || forwarder.id == 0)
+            //{
+            //    yield return new ValidationResult("Forwarder tidak boleh kosong", new List<string> { "forwarder" });
+            //}
         }
     }
 }

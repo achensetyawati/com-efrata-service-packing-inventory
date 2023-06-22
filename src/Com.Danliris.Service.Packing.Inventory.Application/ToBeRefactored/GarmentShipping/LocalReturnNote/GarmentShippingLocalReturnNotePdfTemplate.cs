@@ -12,7 +12,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 {
     public class GarmentShippingLocalReturnNotePdfTemplate
     {
-        public MemoryStream GeneratePdfTemplate(GarmentShippingLocalReturnNoteViewModel viewModel, Buyer buyer, int timeoffset)
+        public MemoryStream GeneratePdfTemplate(GarmentShippingLocalReturnNoteViewModel viewModel, Buyer buyer, Vat vat, int timeoffset)
         {
             const int MARGIN = 20;
 
@@ -41,10 +41,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
 
             cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("PT. AMBASSADOR GARMINDO", header_font_bold));
+            cellHeaderContent1.AddElement(new Phrase("PT. EFRATA GARMINDO UTAMA", header_font_bold));
             cellHeaderContent1.AddElement(new Phrase("Banaran, Grogol, Sukoharjo, Jawa Tengah, 57552", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("PHONE : (0271) 732888, 7652913", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("PO. Box. 166 Solo-57100 Indonesia", normal_font));
+            cellHeaderContent1.AddElement(new Phrase("PHONE : (0271) 714400, 719911", normal_font));
+            //cellHeaderContent1.AddElement(new Phrase("PO. Box. 166 Solo-57100 Indonesia", normal_font));
             tableHeader.AddCell(cellHeaderContent1);
 
             cellHeaderContent2.AddElement(new Phrase("Sukoharjo, " + viewModel.returnDate.GetValueOrDefault().ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")), normal_font));
@@ -133,7 +133,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellBodyRightNoBorder.Border = Rectangle.NO_BORDER;
             tableBody.AddCell(cellBodyRightNoBorder);
 
-            cellBodyRight.Phrase = new Phrase("PPN = 10% X Dasar Pengenaan Pajak...Rp.", normal_font);
+            cellBodyRight.Phrase = new Phrase($"PPN = {vat.rate}% X Dasar Pengenaan Pajak...Rp.", normal_font);
             tableBody.AddCell(cellBodyRight);
 
             cellBodyRightNoBorder.Phrase = new Phrase(string.Format("{0:n2}", ppn), normal_font);

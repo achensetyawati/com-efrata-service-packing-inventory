@@ -69,7 +69,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
 			if (SailingDate == default(DateTimeOffset))
 			{
-				yield return new ValidationResult("SailingDate harus diisi", new List<string> { "SailingDate" });
+				yield return new ValidationResult("Tanggal Pengiriman harus diisi", new List<string> { "SailingDate" });
 			}
 			 
 
@@ -97,8 +97,8 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             }
 
-            if (string.IsNullOrEmpty(CPrice))
-				yield return new ValidationResult("CPrice harus diisi", new List<string> { "CPrice" });
+            //if (string.IsNullOrEmpty(CPrice))
+			//	yield return new ValidationResult("CPrice harus diisi", new List<string> { "CPrice" });
 
             if (string.IsNullOrEmpty(ConsigneeAddress))
                 yield return new ValidationResult("ConsigneeAddress harus diisi", new List<string> { "ConsigneeAddress" });
