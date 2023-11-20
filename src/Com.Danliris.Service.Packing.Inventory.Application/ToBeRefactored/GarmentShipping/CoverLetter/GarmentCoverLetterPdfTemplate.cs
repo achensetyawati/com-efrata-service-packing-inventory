@@ -434,9 +434,9 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "PT. EFRATA GARMINDO UTAMA", marginLeft + 80, headOfficeY, 0);
 
                 string[] headOffices = {
-                    "Head Office : Banaran, Grogol, Sukoharjo, Jawa Tengah ",
-                    "57552",
-                    "Telp. (0271) 714400, 719911",
+                    "Head Office : Jl. Merapi No.23 Blok E1, Desa/Kelurahan Banaran,",
+                    "Kec. Grogol,Kab. Sukoharjo, Provinsi Jawa Tengah",
+                    "Kode Pos: 57552, Telp: 02711740888",
                 };
                 for (int i = 0; i < headOffices.Length; i++)
                 {
