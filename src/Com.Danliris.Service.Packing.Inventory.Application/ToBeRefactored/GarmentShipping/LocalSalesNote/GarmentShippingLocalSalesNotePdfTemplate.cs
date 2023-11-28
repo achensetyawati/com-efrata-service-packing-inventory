@@ -26,7 +26,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             const int MARGIN = 20;
 
             Font header_font_bold_big = FontFactory.GetFont(BaseFont.COURIER_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
-            Font header_font_bold = FontFactory.GetFont(BaseFont.COURIER_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 9);
+            Font header_font_bold = FontFactory.GetFont(BaseFont.COURIER_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 8);
             Font header_font_bold_underlined = FontFactory.GetFont(BaseFont.COURIER_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10, Font.UNDERLINE);
             Font header_font = FontFactory.GetFont(BaseFont.COURIER, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 11);
             Font normal_font = FontFactory.GetFont(BaseFont.COURIER, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 8);
@@ -38,85 +38,9 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             MemoryStream stream = new MemoryStream();
             PdfWriter writer = PdfWriter.GetInstance(document, stream);
 
-            //  writer.PageEvent = new GarmentShippingLocalSalesNotePdfTemplatePageEvent(_identityProvider, viewModel, cl, buyer, timeoffset);
             writer.PageEvent = new GarmentShippingLocalSalesNotePdfTemplatePageEvent(viewModel, cl, buyer, timeoffset);
 
             document.Open();
-
-            //#region header
-            //PdfPTable tableHeader = new PdfPTable(2);
-            //tableHeader.WidthPercentage = 100;
-            //tableHeader.SetWidths(new float[] { 3f, 2f });
-
-            //PdfPCell cellHeaderContent1 = new PdfPCell() { Border = Rectangle.NO_BORDER };
-            //PdfPCell cellHeaderContent2 = new PdfPCell() { Border = Rectangle.NO_BORDER };
-
-
-            //cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
-            //cellHeaderContent1.AddElement(new Phrase("PT. DAN LIRIS", header_font_bold));
-            //cellHeaderContent1.AddElement(new Phrase("Jl. Merapi No. 23, Kel. Banaran Kec.Grogol Kab. Sukoharjo", normal_font));
-            //cellHeaderContent1.AddElement(new Phrase("Telp : 0271-714400, Fax. 0271-717178", normal_font));
-            //cellHeaderContent1.AddElement(new Phrase("PO. Box. 166 Solo-57100 Indonesia", normal_font));
-            ////cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
-            //tableHeader.AddCell(cellHeaderContent1);
-
-            //cellHeaderContent2.AddElement(new Phrase("Sukoharjo, " + viewModel.date.GetValueOrDefault().ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")), normal_font));
-            //cellHeaderContent2.AddElement(new Phrase("\n", normal_font));
-            ////cellHeaderContent2.AddElement(new Phrase("\n", normal_font));
-            //cellHeaderContent2.AddElement(new Phrase(viewModel.buyer.Code + " - " + viewModel.buyer.Name + " - " + viewModel.buyer.KaberType, normal_font));
-            //cellHeaderContent2.AddElement(new Phrase(buyer.Address, normal_font));
-            //tableHeader.AddCell(cellHeaderContent2);
-
-            //document.Add(tableHeader);
-
-            //#endregion
-
-            //#region title
-
-            //Paragraph title = new Paragraph("NOTA PENJUALAN GARMENT", header_font_bold);
-            //title.Alignment = Element.ALIGN_CENTER;
-            //document.Add(title);
-
-            //Paragraph no = new Paragraph(viewModel.noteNo, header_font_bold);
-            //no.Alignment = Element.ALIGN_CENTER;
-            //document.Add(no);
-
-            ////if (viewModel.buyer.KaberType == "KABER")
-            ////{
-            ////    Paragraph location = new Paragraph("PPN BERFASILITAS", normal_font_bold);
-            ////    location.Alignment = Element.ALIGN_RIGHT;
-            ////    document.Add(location);
-            ////}
-            //PdfPTable tableTitle = new PdfPTable(6);
-            //tableTitle.WidthPercentage = 100;
-            //tableTitle.SetWidths(new float[] { 1.5f, 2f, 1.5f, 2f, 1.5f, 1f });
-
-            //PdfPCell cellFooterContent1x = new PdfPCell() { Border = Rectangle.NO_BORDER };
-            //PdfPCell cellFooterContent2x = new PdfPCell() { Border = Rectangle.NO_BORDER };
-            //PdfPCell cellFooterContent31 = new PdfPCell() { Border = Rectangle.NO_BORDER };
-            //PdfPCell cellFooterContent41 = new PdfPCell() { Border = Rectangle.NO_BORDER };
-            //PdfPCell cellFooterContent51 = new PdfPCell() { Border = Rectangle.NO_BORDER };
-            //PdfPCell cellFooterContent61 = new PdfPCell() { Border = Rectangle.NO_BORDER };
-
-            //cellFooterContent1x.Phrase = new Phrase("NPWP Penjual :", normal_font);
-            //tableTitle.AddCell(cellFooterContent1x);
-            //cellFooterContent2x.Phrase = new Phrase("01.139.907.8-532.000", normal_font);
-            //tableTitle.AddCell(cellFooterContent2x);
-
-            //cellFooterContent31.Phrase = new Phrase("NPWP Pembeli :", normal_font);
-            //tableTitle.AddCell(cellFooterContent31);
-            //cellFooterContent41.Phrase = new Phrase(buyer.npwp, normal_font);
-            //tableTitle.AddCell(cellFooterContent41);
-
-            //cellFooterContent51.Phrase = new Phrase("NIK Pembeli :", normal_font);
-            //tableTitle.AddCell(cellFooterContent51);
-            //cellFooterContent61.Phrase = new Phrase("", normal_font);
-            //tableTitle.AddCell(cellFooterContent61);
-            //tableTitle.SpacingAfter = 3;
-            //tableTitle.HorizontalAlignment = Element.ALIGN_LEFT;
-            //document.Add(tableTitle);
-
-            //#endregion
 
             #region bodyTable
             PdfPTable tableBody = new PdfPTable(7);
@@ -234,10 +158,10 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellFooterContent2.Phrase = new Phrase(string.IsNullOrWhiteSpace(viewModel.dispositionNo) ? "-" : viewModel.dispositionNo, normal_font);
             tableFooter.AddCell(cellFooterContent2);
 
-            cellFooterContent3.Phrase = new Phrase("No Bea Cukai      :", normal_font);
-            tableFooter.AddCell(cellFooterContent3);
-            cellFooterContent4.Phrase = new Phrase(cl == null ? "-" : cl.bcNo, normal_font);
-            tableFooter.AddCell(cellFooterContent4);
+            //cellFooterContent3.Phrase = new Phrase("No Bea Cukai      :", normal_font);
+            //tableFooter.AddCell(cellFooterContent3);
+            //cellFooterContent4.Phrase = new Phrase(cl == null ? "-" : cl.bcNo, normal_font);
+            //tableFooter.AddCell(cellFooterContent4);
 
             cellFooterContent1.Phrase = new Phrase("Tempo Pembayaran  :", normal_font);
             tableFooter.AddCell(cellFooterContent1);
@@ -247,6 +171,11 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             cellFooterContent3.Phrase = (new Phrase("Tanggal J/T       :", normal_font));
             tableFooter.AddCell(cellFooterContent3);
             cellFooterContent4.Phrase = (new Phrase(viewModel.date.GetValueOrDefault().AddDays(viewModel.tempo).ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")), normal_font));
+            tableFooter.AddCell(cellFooterContent4);
+            
+            cellFooterContent3.Phrase = new Phrase("", normal_font);
+            tableFooter.AddCell(cellFooterContent3);
+            cellFooterContent4.Phrase = new Phrase("", normal_font);
             tableFooter.AddCell(cellFooterContent4);
             document.Add(tableFooter);
             #endregion
@@ -278,7 +207,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             document.Add(new Paragraph("PROSES PAYMENT HARAP DI TRANSFER KE :", normal_font));
             document.Add(new Paragraph("Bank INDEX SELINDO - CABANG JAKARTA", normal_font));
             document.Add(new Paragraph("NO. REK : 1271006188", normal_font));
-            document.Add(new Paragraph("A/N : PT Efrata Retailindo", normal_font));
+            document.Add(new Paragraph("A/N : PT Efrata Garmindo Utama", normal_font));
             document.Add(new Paragraph(" ", normal_font));
 
             #region sign
@@ -354,7 +283,8 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             float height = writer.PageSize.Height, width = writer.PageSize.Width;
             float marginLeft = document.LeftMargin, marginTop = document.TopMargin, marginRight = document.RightMargin, marginBottom = document.BottomMargin;
             Font normal_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 8);
-            Font header_font_bold = FontFactory.GetFont(BaseFont.COURIER_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
+            Font small_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 7);
+            Font header_font_bold = FontFactory.GetFont(BaseFont.COURIER_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
             Font header_font_bold_underlined = FontFactory.GetFont(BaseFont.COURIER_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10, Font.UNDERLINE);
 
             cb.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED), 8);
@@ -368,13 +298,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             PdfPCell cellHeaderContent1 = new PdfPCell() { Border = Rectangle.NO_BORDER };
             PdfPCell cellHeaderContent2 = new PdfPCell() { Border = Rectangle.NO_BORDER };
 
-
-            cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
+            //cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
             cellHeaderContent1.AddElement(new Phrase("PT. EFRATA GARMINDO UTAMA", header_font_bold));
-            cellHeaderContent1.AddElement(new Phrase("Banaran, Grogol, Sukoharjo, Jawa Tengah", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("57552", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("Telp (0271) 714400, 719911", normal_font));
-            cellHeaderContent1.AddElement(new Phrase("\n", normal_font));
+            cellHeaderContent1.AddElement(new Phrase("Jl. Merapi No.23 Blok E1, Desa/Kelurahan Banaran, Kec. Grogol,", normal_font));
+            cellHeaderContent1.AddElement(new Phrase("Kab. Sukoharjo, Provinsi Jawa Tengah", normal_font));
+            //cellHeaderContent1.AddElement(new Phrase("", normal_font));
+            cellHeaderContent1.AddElement(new Phrase("Kode Pos: 57552, Telp: 02711740888", normal_font));
             tableHeader.AddCell(cellHeaderContent1);
 
             cellHeaderContent2.AddElement(new Phrase("Sukoharjo, " + viewModel.date.GetValueOrDefault().ToOffset(new TimeSpan(timeoffset, 0, 0)).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")), normal_font));
@@ -420,7 +349,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
             cellFooterContent1x.Phrase = new Phrase("NPWP Penjual :", normal_font);
             tableTitle.AddCell(cellFooterContent1x);
-            cellFooterContent2x.Phrase = new Phrase("01.139.907.8-532.000", normal_font);
+            cellFooterContent2x.Phrase = new Phrase("31.579.110.3-532.000", normal_font);
             tableTitle.AddCell(cellFooterContent2x);
 
             cellFooterContent31.Phrase = new Phrase("NPWP Pembeli :", normal_font);
