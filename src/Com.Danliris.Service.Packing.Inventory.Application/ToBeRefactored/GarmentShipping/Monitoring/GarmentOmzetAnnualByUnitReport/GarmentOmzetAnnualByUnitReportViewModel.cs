@@ -32,13 +32,5 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
         public string MonthName { get; set; }
         public decimal Amount1 { get; set; }
         public decimal Amount1IDR { get; set; }
-        public decimal Amount2 { get; set; }
-        public decimal Amount2IDR { get; set; }
-        public decimal Amount3 { get; set; }
-        public decimal Amount3IDR { get; set; }
-        public decimal Amount4 { get; set; }
-        public decimal Amount4IDR { get; set; }
-        public decimal Amount5 { get; set; }
-        public decimal Amount5IDR { get; set; }
     }
 }

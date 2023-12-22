@@ -128,7 +128,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 data.AmountIDR = rate * data.Amount;
             }
             //
-            var QueryOmzet1 = (from a in Query.Distinct() where a.UnitCode == "C1A"
+            var QueryOmzet = (from a in Query.Distinct() where a.UnitCode == "EFR"
 
                                select new { a.Month, a.MonthName, a.UnitName, a.Amount, a.AmountIDR })
                                .GroupBy(x => new { x.Month, x.MonthName, x.UnitName }, (key, group) => new AnnualOmzetByUnitViewModel
@@ -136,118 +136,18 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                                    Month = key.Month,
                                    MonthName = key.MonthName,
                                    Amount1 = group.Sum(x => x.Amount),
-                                   Amount1IDR = group.Sum(x => x.AmountIDR),
-                                   Amount2 = 0,
-                                   Amount2IDR = 0,
-                                   Amount3 = 0,
-                                   Amount3IDR = 0,
-                                   Amount4 = 0,
-                                   Amount4IDR = 0,
-                                   Amount5 = 0,
-                                   Amount5IDR = 0,
+                                   Amount1IDR = group.Sum(x => x.AmountIDR)
                        }).OrderBy(i => i.Month);
-            //
-            var QueryOmzet2 = (from a in Query.Distinct()
-                               where a.UnitCode == "C1B"
-
-                               select new { a.Month, a.MonthName, a.UnitName, a.Amount, a.AmountIDR })
-                               .GroupBy(x => new { x.Month, x.MonthName, x.UnitName }, (key, group) => new AnnualOmzetByUnitViewModel
-                               {
-                                   Month = key.Month,
-                                   MonthName = key.MonthName,
-                                   Amount1 = 0,
-                                   Amount1IDR = 0,
-                                   Amount2 = group.Sum(x => x.Amount),
-                                   Amount2IDR = group.Sum(x => x.AmountIDR),
-                                   Amount3 = 0,
-                                   Amount3IDR = 0,
-                                   Amount4 = 0,
-                                   Amount4IDR = 0,
-                                   Amount5 = 0,
-                                   Amount5IDR = 0,
-                               }).OrderBy(i => i.Month);
-            //
-            var QueryOmzet3 = (from a in Query.Distinct()
-                               where a.UnitCode == "C2A"
-
-                               select new { a.Month, a.MonthName, a.UnitName, a.Amount, a.AmountIDR })
-                               .GroupBy(x => new { x.Month, x.MonthName, x.UnitName }, (key, group) => new AnnualOmzetByUnitViewModel
-                               {
-                                   Month = key.Month,
-                                   MonthName = key.MonthName,
-                                   Amount1 = 0,
-                                   Amount1IDR = 0,
-                                   Amount2 = 0,
-                                   Amount2IDR = 0,
-                                   Amount3 = group.Sum(x => x.Amount),
-                                   Amount3IDR = group.Sum(x => x.AmountIDR),
-                                   Amount4 = 0,
-                                   Amount4IDR = 0,
-                                   Amount5 = 0,
-                                   Amount5IDR = 0,
-                               }).OrderBy(i => i.Month);
-            //
-            var QueryOmzet4 = (from a in Query.Distinct()
-                               where a.UnitCode == "C2B"
-
-                               select new { a.Month, a.MonthName, a.UnitName, a.Amount, a.AmountIDR })
-                               .GroupBy(x => new { x.Month, x.MonthName, x.UnitName }, (key, group) => new AnnualOmzetByUnitViewModel
-                               {
-                                   Month = key.Month,
-                                   MonthName = key.MonthName,
-                                   Amount1 = 0,
-                                   Amount1IDR = 0,
-                                   Amount2 = 0,
-                                   Amount2IDR = 0,
-                                   Amount3 = 0,
-                                   Amount3IDR = 0,
-                                   Amount4 = group.Sum(x => x.Amount),
-                                   Amount4IDR = group.Sum(x => x.AmountIDR),
-                                   Amount5 = 0,
-                                   Amount5IDR = 0,
-                               }).OrderBy(i => i.Month);
-            //
-            var QueryOmzet5 = (from a in Query.Distinct()
-                               where a.UnitCode == "C2C"
-
-                              select new { a.Month, a.MonthName, a.UnitName, a.Amount, a.AmountIDR })
-                               .GroupBy(x => new { x.Month, x.MonthName, x.UnitName }, (key, group) => new AnnualOmzetByUnitViewModel
-                               {
-                                   Month = key.Month,
-                                   MonthName = key.MonthName,
-                                   Amount1 = 0,
-                                   Amount1IDR = 0,
-                                   Amount2 = 0,
-                                   Amount2IDR = 0,
-                                   Amount3 = 0,
-                                   Amount3IDR = 0,
-                                   Amount4 = 0,
-                                   Amount4IDR = 0,
-                                   Amount5 = group.Sum(x => x.Amount),
-                                   Amount5IDR = group.Sum(x => x.AmountIDR),
-                               }).OrderBy(i => i.Month);
-
-            var QueryOmzet = QueryOmzet1.Union(QueryOmzet2).Union(QueryOmzet3).Union(QueryOmzet4).Union(QueryOmzet5);
-
-            //
-
+            
             var QueryAnnualOmzet = (from a in QueryOmzet
                                
-                                    select new { a.Month, a.MonthName, a.Amount1, a.Amount1IDR, a.Amount2, a.Amount2IDR, a.Amount3, a.Amount3IDR, a.Amount4, a.Amount4IDR, a.Amount5, a.Amount5IDR })
+                                    select new { a.Month, a.MonthName, a.Amount1, a.Amount1IDR})
                                     .GroupBy(x => new { x.Month, x.MonthName }, (key, group) => new AnnualOmzetByUnitViewModel
                                     {
                                        Month = key.Month,
                                        MonthName = key.MonthName,
                                        Amount1 = group.Sum(x => x.Amount1),
-                                       Amount1IDR = group.Sum(x => x.Amount1IDR),
-                                       Amount2 = group.Sum(x => x.Amount2),
-                                       Amount2IDR = group.Sum(x => x.Amount2IDR),
-                                       Amount3 = group.Sum(x => x.Amount3),
-                                       Amount3IDR = group.Sum(x => x.Amount3IDR),
-                                       Amount4 = group.Sum(x => x.Amount4),
-                                       Amount4IDR = group.Sum(x => x.Amount4IDR),
-                                       Amount5 = group.Sum(x => x.Amount5),
-                                       Amount5IDR = group.Sum(x => x.Amount5IDR),
+                                       Amount1IDR = group.Sum(x => x.Amount1IDR)
                                     }).OrderBy(i => i.Month).ToList();
             
             return QueryAnnualOmzet.OrderBy(x => x.Month).ToList();
@@ -270,23 +170,15 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
             DataTable result = new DataTable();
 
             result.Columns.Add(new DataColumn() { ColumnName = "BULAN", DataType = typeof(string) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT USD - C1A", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT IDR - C1A", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT USD - C1B", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT IDR - C1B", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT USD - C2A", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT IDR - C2A", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT USD - C2B", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT IDR - C2B", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT USD - C2C", DataType = typeof(decimal) });
-            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT IDR - C2C", DataType = typeof(decimal) });
+            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT USD - EFR", DataType = typeof(decimal) });
+            result.Columns.Add(new DataColumn() { ColumnName = "AMOUNT IDR - EFR", DataType = typeof(decimal) });
 
             ExcelPackage package = new ExcelPackage();
 
             if (Query.ToArray().Count() == 0)
             {
 
-                result.Rows.Add("", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                result.Rows.Add("", 0, 0);
                 bool styling = true;
 
                 foreach (KeyValuePair<DataTable, String> item in new List<KeyValuePair<DataTable, string>>() { new KeyValuePair<DataTable, string>(result, "Territory") })
@@ -318,7 +210,7 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
                 {
                     index++;
                     
-                    result.Rows.Add(d.MonthName, d.Amount1, d.Amount1IDR, d.Amount2, d.Amount2IDR, d.Amount3, d.Amount3IDR, d.Amount4, d.Amount4IDR, d.Amount5, d.Amount5IDR);
+                    result.Rows.Add(d.MonthName, d.Amount1, d.Amount1IDR);
                 }
 
                 //string TotQty = string.Format("{0:N2}", Query.Sum(x => x.QuantityInPCS));
@@ -327,28 +219,12 @@ namespace Com.Danliris.Service.Packing.Inventory.Application.ToBeRefactored.Garm
 
                 decimal TotUSD1 = Query.Sum(x => x.Amount1);
                 decimal TotIDR1 = Query.Sum(x => x.Amount1IDR);
-                decimal TotUSD2 = Query.Sum(x => x.Amount2);
-                decimal TotIDR2 = Query.Sum(x => x.Amount2IDR);
-                decimal TotUSD3 = Query.Sum(x => x.Amount3);
-                decimal TotIDR3 = Query.Sum(x => x.Amount3IDR);
-                decimal TotUSD4 = Query.Sum(x => x.Amount4);
-                decimal TotIDR4 = Query.Sum(x => x.Amount4IDR);
-                decimal TotUSD5 = Query.Sum(x => x.Amount5);
-                decimal TotIDR5 = Query.Sum(x => x.Amount5IDR);
                 //
                 decimal AVGUSD1 = Math.Round(TotUSD1 / 12, 2, MidpointRounding.AwayFromZero);
                 decimal AVGIDR1 = Math.Round(TotIDR1 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGUSD2 = Math.Round(TotUSD2 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGIDR2 = Math.Round(TotIDR2 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGUSD3 = Math.Round(TotUSD3 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGIDR3 = Math.Round(TotIDR3 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGUSD4 = Math.Round(TotUSD4 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGIDR4 = Math.Round(TotIDR4 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGUSD5 = Math.Round(TotUSD5 / 12, 2, MidpointRounding.AwayFromZero);
-                decimal AVGIDR5 = Math.Round(TotIDR5 / 12, 2, MidpointRounding.AwayFromZero);
 
-                result.Rows.Add("TOTAL   : ", TotUSD1, TotIDR1, TotUSD2, TotIDR2, TotUSD3, TotIDR3, TotUSD4, TotIDR4, TotUSD5, TotIDR5);
-                result.Rows.Add("AVERAGE : ", AVGUSD1, AVGIDR1, AVGUSD2, AVGIDR2, AVGUSD3, AVGIDR3, AVGUSD4, AVGIDR4, AVGUSD5, AVGIDR5);
+                result.Rows.Add("TOTAL   : ", TotUSD1, TotIDR1);
+                result.Rows.Add("AVERAGE : ", AVGUSD1, AVGIDR1);
 
                 bool styling = true;
 
